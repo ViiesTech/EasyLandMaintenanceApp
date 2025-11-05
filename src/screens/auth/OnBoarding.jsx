@@ -1,8 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useRef, useState } from 'react';
-import { View, Image, TouchableOpacity } from 'react-native';
+import { View, Image } from 'react-native';
 import {
-  responsiveFontSize,
   responsiveHeight,
   responsiveWidth,
 } from '../../utils/Responsive_Dimensions';
@@ -11,8 +10,8 @@ import AppText from '../../components/AppText';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import { useNavigation } from '@react-navigation/native';
 import LineBreak from '../../components/LineBreak';
-import Feather from 'react-native-vector-icons/Feather';
 import { AppImages } from '../../assets/images';
+import AppButton from '../../components/AppButton';
 
 const OnBoarding = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -46,18 +45,19 @@ const OnBoarding = () => {
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        // marginTop: responsiveHeight(3),
       }}
     >
       {slides.map((_, index) => (
         <View
           key={index}
           style={{
-            width: 8,
+            width: index === currentIndex ? responsiveWidth(6) : 8,
             height: 8,
             borderRadius: 4,
             backgroundColor:
-              index === currentIndex ? AppColors.darkBlue : AppColors.DARKGRAY,
+              index === currentIndex
+                ? AppColors.ThemeColor
+                : AppColors.lightThemeColor,
             marginHorizontal: responsiveWidth(1),
           }}
         />
@@ -83,7 +83,7 @@ const OnBoarding = () => {
         <AppText
           title={item.title}
           textColor={AppColors.GRAY}
-          textSize={2}
+          textSize={1.7}
           textFontWeight
         />
         <LineBreak space={1} />
@@ -103,6 +103,10 @@ const OnBoarding = () => {
     if (currentIndex < slides.length - 1) {
       sliderRef.current?.goToSlide(currentIndex + 1, true);
     }
+  };
+
+   const handleSkip = () => {
+      sliderRef.current?.goToSlide(currentIndex + 2, true);
   };
 
   const handlePrev = () => {
@@ -125,29 +129,20 @@ const OnBoarding = () => {
             justifyContent: 'space-around',
           }}
         >
-          <View
-            style={{
-              width: 50,
-              height: 50,
-            }}
+          <AppButton
+            title={'Skip'}
+            bgColor={AppColors.LIGHTGRAY}
+            textColor={AppColors.GRAY}
+            buttoWidth={45}
+            handlePress={() => handleSkip()}
           />
-          <TouchableOpacity
-            onPress={() => handleNext()}
-            style={{
-              backgroundColor: AppColors.BTNCOLOURS,
-              width: 50,
-              height: 50,
-              justifyContent: 'center',
-              alignItems: 'center',
-              borderRadius: 100,
-            }}
-          >
-            <Feather
-              name="arrow-right"
-              size={responsiveFontSize(4)}
-              color={AppColors.WHITE}
-            />
-          </TouchableOpacity>
+          <AppButton
+            title={'Next'}
+            bgColor={AppColors.ThemeColor}
+            buttoWidth={45}
+            textColor={AppColors.BLACK}
+            handlePress={() => handleNext()}
+          />
         </View>
       );
     }
@@ -161,43 +156,20 @@ const OnBoarding = () => {
             justifyContent: 'space-around',
           }}
         >
-          <TouchableOpacity
-            onPress={() => handlePrev()}
-            style={{
-              borderWidth: 1,
-              borderColor: AppColors.PEACHCOLOUR,
-              width: 50,
-              height: 50,
-              justifyContent: 'center',
-              alignItems: 'center',
-              borderRadius: 100,
-              elevation: 10,
-              backgroundColor: AppColors.WHITE,
-            }}
-          >
-            <Feather
-              name="arrow-left"
-              size={responsiveFontSize(4)}
-              color={AppColors.BLACK}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => handleNext()}
-            style={{
-              backgroundColor: AppColors.BTNCOLOURS,
-              width: 50,
-              height: 50,
-              justifyContent: 'center',
-              alignItems: 'center',
-              borderRadius: 100,
-            }}
-          >
-            <Feather
-              name="arrow-right"
-              size={responsiveFontSize(4)}
-              color={AppColors.WHITE}
-            />
-          </TouchableOpacity>
+          <AppButton
+            title={'Previous'}
+            bgColor={AppColors.LIGHTGRAY}
+            textColor={AppColors.GRAY}
+            buttoWidth={45}
+            handlePress={() => handlePrev()}
+          />
+          <AppButton
+            title={'Next'}
+            bgColor={AppColors.ThemeColor}
+            buttoWidth={45}
+            textColor={AppColors.BLACK}
+            handlePress={() => handleNext()}
+          />
         </View>
       );
     }
@@ -211,93 +183,20 @@ const OnBoarding = () => {
             justifyContent: 'space-around',
           }}
         >
-          <TouchableOpacity
-            onPress={() => handlePrev()}
-            style={{
-              borderWidth: 1,
-              borderColor: AppColors.PEACHCOLOUR,
-              width: 50,
-              height: 50,
-              justifyContent: 'center',
-              alignItems: 'center',
-              borderRadius: 100,
-              elevation: 10,
-              backgroundColor: AppColors.WHITE,
-            }}
-          >
-            <Feather
-              name="arrow-left"
-              size={responsiveFontSize(4)}
-              color={AppColors.BLACK}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => handleNext()}
-            style={{
-              backgroundColor: AppColors.BTNCOLOURS,
-              width: 50,
-              height: 50,
-              justifyContent: 'center',
-              alignItems: 'center',
-              borderRadius: 100,
-            }}
-          >
-            <Feather
-              name="arrow-right"
-              size={responsiveFontSize(4)}
-              color={AppColors.WHITE}
-            />
-          </TouchableOpacity>
-        </View>
-      );
-    }
-
-    if (currentIndex === 3) {
-      return (
-        <View
-          style={{
-            paddingVertical: responsiveHeight(3),
-            flexDirection: 'row',
-            justifyContent: 'space-around',
-          }}
-        >
-          <TouchableOpacity
-            onPress={() => handlePrev()}
-            style={{
-              borderWidth: 1,
-              borderColor: AppColors.PEACHCOLOUR,
-              width: 50,
-              height: 50,
-              justifyContent: 'center',
-              alignItems: 'center',
-              borderRadius: 100,
-              elevation: 10,
-              backgroundColor: AppColors.WHITE,
-            }}
-          >
-            <Feather
-              name="arrow-left"
-              size={responsiveFontSize(4)}
-              color={AppColors.BLACK}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => handleDone()}
-            style={{
-              backgroundColor: AppColors.BTNCOLOURS,
-              width: 50,
-              height: 50,
-              justifyContent: 'center',
-              alignItems: 'center',
-              borderRadius: 100,
-            }}
-          >
-            <Feather
-              name="arrow-right"
-              size={responsiveFontSize(4)}
-              color={AppColors.WHITE}
-            />
-          </TouchableOpacity>
+          <AppButton
+            title={'Previous'}
+            bgColor={AppColors.LIGHTGRAY}
+            textColor={AppColors.GRAY}
+            buttoWidth={45}
+            handlePress={() => handlePrev()}
+          />
+          <AppButton
+            title={'Continue'}
+            bgColor={AppColors.ThemeColor}
+            buttoWidth={45}
+            textColor={AppColors.BLACK}
+            handlePress={() => handleDone()}
+          />
         </View>
       );
     }

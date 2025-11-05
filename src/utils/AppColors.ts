@@ -22,6 +22,8 @@ type Colors = {
     darkBlue: string
     darkYellow:string
     lowGreen: string
+    lightThemeColor: string
+    inputBgColor: string
   };
 
 const   AppColors: Colors = {
@@ -37,15 +39,17 @@ const   AppColors: Colors = {
     BGCOLOURS2: "#FE3F9B",
     PRIMARY:"#0088F0",
     TEXTCOLOR: "#494949",
-    LIGHTGRAY: "#5D5D5D",
+    LIGHTGRAY: "#DEDEDE",
     rightArrowCOlor: "#3D56F0",
     ThemeColor: '#4CE5B1',
     Yellow: '#FF9C12',
     lightRed: '#FFD7D7',
+    inputBgColor: '#F8F9FD',
     appBgColor: '#e7e4e4',
     hotPink: '#E74B90',
     royalBlue: '#2F6CAD',
     darkBlue: '#33434F',
+    lightThemeColor: '#C8E2FD',
     darkYellow: '#E55B13',
     lowGreen: '#587B58',
   };

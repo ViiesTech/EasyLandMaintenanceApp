@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 import { View, Text } from 'react-native';
 import AppColors from '../../utils/AppColors';
 import { useNavigation } from '@react-navigation/native';
+import { responsiveFontSize } from '../../utils/Responsive_Dimensions';
 
 const SplashFullScreen = () => {
   const nav = useNavigation();
@@ -24,12 +25,21 @@ const SplashFullScreen = () => {
     >
       <Text
         style={{
-          fontFamily: 'RobotoCondensedLight',
-          fontSize: 50,
+          fontFamily: 'BevanItalic',
+          fontSize: responsiveFontSize(4),
           textAlign: 'center',
         }}
       >
-        EASY LAND MAINTENANCE
+        EASY LAND
+      </Text>
+      <Text
+        style={{
+          fontFamily: 'BevanItalic',
+          fontSize: responsiveFontSize(4),
+          textAlign: 'center',
+        }}
+      >
+        MAINTENANCE
       </Text>
     </View>
   );

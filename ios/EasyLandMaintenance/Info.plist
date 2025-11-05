@@ -53,6 +53,10 @@
 	<array>
 		<string>RobotoCondensedLight.ttf</string>
 		<string>RobotoExtraBold.ttf</string>
+		<string>BevanItalic.ttf</string>
+		<string>BevanRegular.ttf</string>
+		<string>RacingSansOneRegular.ttf</string>
+		<string>RobotoMediumItalic.ttf</string>
 	</array>
 </dict>
 </plist>

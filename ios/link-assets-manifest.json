@@ -2,12 +2,28 @@
   "migIndex": 1,
   "data": [
     {
+      "path": "src/assets/fonts/BevanItalic.ttf",
+      "sha1": "77e99ff8df7934ff083a4bc505bc8663939d1e53"
+    },
+    {
+      "path": "src/assets/fonts/BevanRegular.ttf",
+      "sha1": "ca3385f48384223df02dd0a26022809643e59ab4"
+    },
+    {
+      "path": "src/assets/fonts/RacingSansOneRegular.ttf",
+      "sha1": "8af9d456f26ec2bd5591496f23f3a92f4f520a78"
+    },
+    {
       "path": "src/assets/fonts/RobotoCondensedLight.ttf",
       "sha1": "1daf12253cbd45c84a4f3b04d2ccea83d40446cb"
     },
     {
       "path": "src/assets/fonts/RobotoExtraBold.ttf",
       "sha1": "3dbfd71b6fbcfbd8e7ee8a8dd033dc5aaad63249"
+    },
+    {
+      "path": "src/assets/fonts/RobotoMediumItalic.ttf",
+      "sha1": "debc1546314dd5655403df6965878d3f8dc41897"
     }
   ]
 }
