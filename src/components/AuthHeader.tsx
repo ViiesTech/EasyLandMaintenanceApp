@@ -10,9 +10,10 @@ type Prop = {
     pageHead?: string;
     space?: number;
     subTitle?: string;
+    subTitleSpace?: number;
 }
 
-const AuthHeader = ({ pageHead, space, subTitle }: Prop) => {
+const AuthHeader = ({ pageHead, space, subTitle, subTitleSpace }: Prop) => {
     return (
         <View style={{ alignItems: 'center' }}>
             <View style={{ backgroundColor: AppColors.ThemeColor, paddingVertical: responsiveHeight(0.5), width: responsiveWidth(40), borderRadius: 10 }}>
@@ -42,7 +43,7 @@ const AuthHeader = ({ pageHead, space, subTitle }: Prop) => {
                 textFontWeight
                 textSize={3.5}
             />
-            {subTitle && <LineBreak space={2.5} />}
+            {subTitle && <LineBreak space={subTitleSpace ? subTitleSpace : 2.5} />}
             {subTitle && <AppText
                 title={subTitle}
                 textSize={1.5}

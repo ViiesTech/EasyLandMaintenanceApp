@@ -24,9 +24,11 @@ type Colors = {
     lowGreen: string
     lightThemeColor: string
     inputBgColor: string
+    lightGreenColor: string
+    red: string
   };
 
-const   AppColors: Colors = {
+const AppColors: Colors = {
     BLACK: "#000000",
     WHITE: "#FFFFFF",
     BTNCOLOURS: "#104210",
@@ -40,11 +42,13 @@ const   AppColors: Colors = {
     PRIMARY:"#0088F0",
     TEXTCOLOR: "#494949",
     LIGHTGRAY: "#DEDEDE",
+    lightGreenColor: '#DCFCE7',
     rightArrowCOlor: "#3D56F0",
     ThemeColor: '#4CE5B1',
     Yellow: '#FF9C12',
     lightRed: '#FFD7D7',
     inputBgColor: '#F8F9FD',
+    red: '#EB2022',
     appBgColor: '#e7e4e4',
     hotPink: '#E74B90',
     royalBlue: '#2F6CAD',

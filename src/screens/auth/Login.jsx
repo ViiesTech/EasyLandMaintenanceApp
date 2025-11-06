@@ -66,7 +66,11 @@ const Login = () => {
           </TouchableOpacity>
         </View>
         <LineBreak space={2} />
-        <AppButton title={'Login'} bgColor={AppColors.BLACK} />
+        <AppButton
+          title={'Login'}
+          bgColor={AppColors.BLACK}
+          handlePress={() => nav.navigate('Main')}
+        />
         <LineBreak space={2} />
         <AppText
           title={'Or Login With'}

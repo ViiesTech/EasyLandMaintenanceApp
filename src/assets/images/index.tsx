@@ -3,4 +3,9 @@ export const AppImages = {
     step_one: require('./step_one.png'),
     step_two: require('./step_two.png'),
     step_three: require('./step_three.png'),
+    header_shadow: require('./header_shadow.png'),
+    user: require('./user.jpg'),
+    first_banner_bg: require('./first_banner_bg.png'),
+    second_banner_bg: require('./second_banner_bg.png'),
+    header_bg: require('./header_bg.png'),
 };

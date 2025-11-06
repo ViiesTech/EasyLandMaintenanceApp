@@ -8,6 +8,9 @@ import SignUp from './../screens/auth/SignUp';
 import ForgetPassword from './../screens/auth/ForgetPassword';
 import EnterPassCode from './../screens/auth/EnterPassCode';
 import NewPassword from './../screens/auth/NewPassword';
+import SelectType from './../screens/auth/SelectType';
+import EnableLocation from './../screens/auth/EnableLocation';
+import CompleteYourProfile from './../screens/auth/CompleteYourProfile';
 
 const Stack = createStackNavigator();
 const Auth = () => {
@@ -23,6 +26,9 @@ const Auth = () => {
       <Stack.Screen name="ForgetPassword" component={ForgetPassword} />
       <Stack.Screen name="EnterPassCode" component={EnterPassCode} />
       <Stack.Screen name="NewPassword" component={NewPassword} />
+      <Stack.Screen name="SelectType" component={SelectType} />
+      <Stack.Screen name="EnableLocation" component={EnableLocation} />
+      <Stack.Screen name="CompleteYourProfile" component={CompleteYourProfile} />
     </Stack.Navigator>
   );
 };

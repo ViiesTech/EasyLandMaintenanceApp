@@ -72,7 +72,11 @@ const SignUp = () => {
           containerBg={AppColors.inputBgColor}
         />
         <LineBreak space={2} />
-        <AppButton title={'Sign up'} bgColor={AppColors.BLACK} />
+        <AppButton
+          title={'Sign up'}
+          bgColor={AppColors.BLACK}
+          handlePress={() => nav.navigate('SelectType')}
+        />
         <LineBreak space={2} />
         <AppText
           title={'Or Sign up With'}

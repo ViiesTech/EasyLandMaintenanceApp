@@ -22,7 +22,7 @@ const Splash = () => {
   useEffect(() => {
     setTimeout(() => {
       nav.replace('SplashFullScreen');
-    }, 1500);
+    }, 2000);
   }, []);
 
   return (

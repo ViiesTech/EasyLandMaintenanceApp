@@ -65,7 +65,7 @@ const AppTextInput = ({
         paddingVertical: borderBottomWidth ? 0 : 5,
         borderRadius: borderRadius ? borderRadius : 12,
         alignItems: 'center',
-        gap: 10,
+        gap: 5,
         borderWidth: borderBottomWidth ? 0 : borderWidth ? borderWidth : 1,
         borderBottomWidth: borderBottomWidth,
         borderBottomColor: borderBottomColor,
