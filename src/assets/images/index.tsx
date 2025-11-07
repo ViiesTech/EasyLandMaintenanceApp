@@ -8,4 +8,6 @@ export const AppImages = {
     first_banner_bg: require('./first_banner_bg.png'),
     second_banner_bg: require('./second_banner_bg.png'),
     header_bg: require('./header_bg.png'),
+    bg: require('./bg.jpg'),
+    services_profile_bg: require('./services_profile_bg.jpg'),
 };

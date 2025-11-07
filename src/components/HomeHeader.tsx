@@ -8,7 +8,7 @@ import AppText from './AppText';
 
 const HomeHeader = () => {
     return (
-        <ImageBackground source={AppImages.header_bg} style={{ backgroundColor: AppColors.ThemeColor, height: responsiveHeight(12), width: responsiveWidth(100) }}>
+        <ImageBackground source={AppImages.header_bg} style={{ paddingTop: responsiveHeight(2), backgroundColor: AppColors.ThemeColor, height: responsiveHeight(12), width: responsiveWidth(100) }}>
 
             <View style={{ paddingHorizontal: responsiveWidth(5), flexDirection: 'row', gap: 15, alignItems: 'center', height: responsiveHeight(12) }}>
                 <Image source={AppImages.user} style={{ width: 50, height: 50, borderRadius: 100 }} />

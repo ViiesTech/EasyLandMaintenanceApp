@@ -26,6 +26,7 @@ type Colors = {
     inputBgColor: string
     lightGreenColor: string
     red: string
+    LightestGray: string
   };
 
 const AppColors: Colors = {
@@ -52,6 +53,7 @@ const AppColors: Colors = {
     appBgColor: '#e7e4e4',
     hotPink: '#E74B90',
     royalBlue: '#2F6CAD',
+    LightestGray: '#F3F3F5',
     darkBlue: '#33434F',
     lightThemeColor: '#C8E2FD',
     darkYellow: '#E55B13',

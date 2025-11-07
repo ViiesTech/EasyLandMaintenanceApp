@@ -64,7 +64,7 @@ const AppTextInput = ({
         paddingHorizontal: responsiveWidth(2),
         paddingVertical: borderBottomWidth ? 0 : 5,
         borderRadius: borderRadius ? borderRadius : 12,
-        alignItems: 'center',
+        alignItems: multiline ? 'flex-start' : 'center',
         gap: 5,
         borderWidth: borderBottomWidth ? 0 : borderWidth ? borderWidth : 1,
         borderBottomWidth: borderBottomWidth,

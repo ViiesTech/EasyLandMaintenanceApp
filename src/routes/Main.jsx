@@ -11,6 +11,7 @@ import Tasks from '../screens/main/Tasks/Tasks';
 import Account from './../screens/main/Account/Account';
 import AppColors from '../utils/AppColors';
 import { responsiveFontSize, responsiveHeight } from '../utils/Responsive_Dimensions';
+import ServicesProfile from './../screens/main/Home/ServicesProfile';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -22,7 +23,7 @@ const Main = () => {
       initialRouteName="Main"
     >
       <Stack.Screen name="Main" component={MyTabs} />
-      {/* <Stack.Screen name="SpecialistProfile" component={SpecialistProfile} /> */}
+      <Stack.Screen name="ServicesProfile" component={ServicesProfile} />
     </Stack.Navigator>
   );
 };
@@ -36,8 +37,17 @@ function MyTabs() {
         tabBarActiveTintColor: '#424758',
         tabBarInactiveTintColor: AppColors.GRAY,
         tabBarStyle: {
-          height: 80,
+          height: responsiveHeight(12),
           paddingTop: responsiveHeight(1.2),
+        position: 'absolute',
+          bottom: 0,
+          left: 0,
+          right: 0,
+          elevation: 0,
+          shadowColor: '#000',
+          shadowOffset: {width: 0, height: -3},
+          shadowOpacity: 0.1,
+          shadowRadius: 5,
         },
         tabBarLabelStyle: {
           paddingTop: responsiveHeight(0.5),

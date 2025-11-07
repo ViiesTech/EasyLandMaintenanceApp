@@ -7,9 +7,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 const App = () => {
   return (
     <NavigationContainer>
-      <SafeAreaView style={{ flex: 1 }}>
         <Routes />
-      </SafeAreaView>
     </NavigationContainer>
   );
 };

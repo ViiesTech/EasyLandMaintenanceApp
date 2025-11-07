@@ -23,6 +23,8 @@ import AppButton from '../../../components/AppButton';
 import HomeBanner from '../../../components/HomeBanner';
 import LinearGradient from 'react-native-linear-gradient';
 import PlusIcon from 'react-native-vector-icons/Feather';
+import RequestFormModal from '../../../components/RequestFormModal';
+import { useNavigation } from '@react-navigation/native';
 
 const popularServices = [
   { id: 1, icon: AppIcons.sezer, title: 'Plant selection', bgColor: '#DCFCE7' },
@@ -43,10 +45,16 @@ const popularServices = [
 
 const Home = () => {
   const [location, setLocation] = useState('');
+  const [visibleReqModal, setVisibleReqModal] = useState(false);
+  const nav = useNavigation();
 
   return (
     <ScrollView style={{ flex: 1, backgroundColor: AppColors.WHITE }}>
       <HomeHeader />
+      <RequestFormModal
+        visible={visibleReqModal}
+        setVisible={setVisibleReqModal}
+      />
       <LineBreak space={2} />
       <View style={{ paddingHorizontal: responsiveWidth(5) }}>
         <AppTextInput
@@ -108,6 +116,7 @@ const Home = () => {
                   height: responsiveHeight(12),
                   borderRadius: 10,
                 }}
+                onPress={() => nav.navigate("ServicesProfile")}
               >
                 <View
                   style={{
@@ -167,6 +176,7 @@ const Home = () => {
               bgColor={AppColors.WHITE}
               textColor={AppColors.ThemeColor}
               buttoWidth={80}
+              handlePress={() => setVisibleReqModal(true)}
               leftIcon={
                 <View
                   style={{
