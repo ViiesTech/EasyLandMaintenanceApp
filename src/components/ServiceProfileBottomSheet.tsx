@@ -23,9 +23,10 @@ const data = [
 type Prop = {
     refRBSheet?: any;
     setIsOpenServicesProfiles?: any;
+    viewDetailsHandlePress?: any;
 }
 
-const ServiceProfileBottomSheet = ({ refRBSheet, setIsOpenServicesProfiles }: Prop) => {
+const ServiceProfileBottomSheet = ({ refRBSheet, setIsOpenServicesProfiles, viewDetailsHandlePress }: Prop) => {
     const [selectedServiceProfile, setSelectedServiceProfile] = useState({ index: null });
 
     return (
@@ -75,7 +76,7 @@ const ServiceProfileBottomSheet = ({ refRBSheet, setIsOpenServicesProfiles }: Pr
                                         <LineBreak space={0.5} />
                                         <View style={{ flexDirection: 'row', width: responsiveWidth(70), justifyContent: 'space-between', alignItems: 'center' }}>
                                             <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
-                                                <AppButton title={'View Details'} bgColor={selectedServiceProfile?.index == index ? AppColors.WHITE : AppColors.ThemeColor} textColor={AppColors.BLACK} textSize={1.1} borderRadius={4} buttoWidth={20} padding={5} />
+                                                <AppButton title={'View Details'} handlePress={viewDetailsHandlePress} bgColor={selectedServiceProfile?.index == index ? AppColors.WHITE : AppColors.ThemeColor} textColor={AppColors.BLACK} textSize={1.1} borderRadius={4} buttoWidth={20} padding={5} />
                                                 <AppText
                                                     title={item.ml}
                                                     textSize={1.5}

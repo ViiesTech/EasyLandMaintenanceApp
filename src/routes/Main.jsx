@@ -12,6 +12,9 @@ import Account from './../screens/main/Account/Account';
 import AppColors from '../utils/AppColors';
 import { responsiveFontSize, responsiveHeight } from '../utils/Responsive_Dimensions';
 import ServicesProfile from './../screens/main/Home/ServicesProfile';
+import Messages from './../screens/main/Home/Messages';
+import IncomingCall from './../screens/main/Home/IncomingCall';
+import ServiceProgress from './../screens/main/Home/ServiceProgress';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -24,6 +27,9 @@ const Main = () => {
     >
       <Stack.Screen name="Main" component={MyTabs} />
       <Stack.Screen name="ServicesProfile" component={ServicesProfile} />
+      <Stack.Screen name="Messages" component={Messages} />
+      <Stack.Screen name="IncomingCall" component={IncomingCall} />
+      <Stack.Screen name="ServiceProgress" component={ServiceProgress} />
     </Stack.Navigator>
   );
 };

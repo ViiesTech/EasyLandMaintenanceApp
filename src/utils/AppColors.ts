@@ -27,12 +27,16 @@ type Colors = {
     lightGreenColor: string
     red: string
     LightestGray: string
+    chatBgColor: string
+    green: string
+    btnColor: string
   };
 
 const AppColors: Colors = {
     BLACK: "#000000",
     WHITE: "#FFFFFF",
     BTNCOLOURS: "#104210",
+    green: '#00A63E',
     GRAY: "#777777",
     BLUE: "#001AB0",
     DARKGRAY: "#939393",
@@ -45,11 +49,13 @@ const AppColors: Colors = {
     LIGHTGRAY: "#DEDEDE",
     lightGreenColor: '#DCFCE7',
     rightArrowCOlor: "#3D56F0",
+    btnColor: '#242E42',
     ThemeColor: '#4CE5B1',
     Yellow: '#FF9C12',
     lightRed: '#FFD7D7',
     inputBgColor: '#F8F9FD',
     red: '#EB2022',
+    chatBgColor: '#4252FF',
     appBgColor: '#e7e4e4',
     hotPink: '#E74B90',
     royalBlue: '#2F6CAD',

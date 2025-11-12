@@ -10,4 +10,7 @@ export const AppImages = {
     header_bg: require('./header_bg.png'),
     bg: require('./bg.jpg'),
     services_profile_bg: require('./services_profile_bg.jpg'),
+    animation: require('./animation.png'),
+    dotsLeft: require('./dotsLeft.png'),
+    dotsRight: require('./dotsRight.png'),
 };
