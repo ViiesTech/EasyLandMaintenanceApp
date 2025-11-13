@@ -1,10 +1,17 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import { View, ScrollView, StyleSheet, ImageBackground } from 'react-native';
+import {
+  View,
+  ScrollView,
+  StyleSheet,
+  ImageBackground,
+  FlatList,
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AppColors from '../../../utils/AppColors';
 import Icon from 'react-native-vector-icons/Octicons';
 import Feather from 'react-native-vector-icons/Feather';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import {
   responsiveFontSize,
   responsiveHeight,
@@ -13,8 +20,27 @@ import {
 import LineBreak from '../../../components/LineBreak';
 import AppText from '../../../components/AppText';
 import { AppImages } from '../../../assets/images';
+import GradientProgressBar from '../../../components/GradientProgressBar';
+import AppButton from '../../../components/AppButton';
+import { useNavigation } from '@react-navigation/native';
+
+const footerData = [
+  {
+    id: 1,
+    icon: '',
+    title: 'Schedule Regular Maintenance',
+    subTitle: 'Save 15% with recurring service',
+  },
+  {
+    id: 2,
+    icon: '',
+    title: 'Seasonal Cleanup Package',
+    subTitle: 'Prepare your yard for winter',
+  },
+];
 
 const AllDone = () => {
+  const nav = useNavigation();
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: AppColors.WHITE }}>
       <ScrollView style={{ flex: 1, backgroundColor: AppColors.WHITE }}>
@@ -94,16 +120,7 @@ const AllDone = () => {
               <View
                 style={{ flexDirection: 'row', alignItems: 'center', gap: 15 }}
               >
-                <View
-                  style={{
-                    backgroundColor: AppColors.lightGreen,
-                    width: responsiveWidth(15),
-                    height: responsiveWidth(15),
-                    borderRadius: 15,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}
-                >
+                <View style={styles.iconBg}>
                   <Feather
                     name={'star'}
                     size={responsiveFontSize(3.5)}
@@ -185,7 +202,7 @@ const AllDone = () => {
               </View>
             </View>
           </View>
-          <LineBreak space={4} />
+          <LineBreak space={2} />
           <View style={styles.card}>
             <View
               style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}
@@ -249,7 +266,120 @@ const AllDone = () => {
               </ImageBackground>
             </View>
           </View>
+          <LineBreak space={2} />
+          <View
+            style={[
+              styles.card,
+              {
+                borderColor: AppColors.Yellow,
+                borderWidth: 2,
+                backgroundColor: AppColors.light_yellow,
+              },
+            ]}
+          >
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                gap: 10,
+              }}
+            >
+              <View
+                style={[styles.iconBg, { backgroundColor: AppColors.Yellow }]}
+              >
+                <Ionicons
+                  name={'trophy-outline'}
+                  size={responsiveFontSize(3.5)}
+                  color={AppColors.WHITE}
+                />
+              </View>
+
+              <View>
+                <AppText
+                  title={'Loyalty Rewards'}
+                  textSize={2.2}
+                  textColor={AppColors.BLACK}
+                />
+                <LineBreak space={1} />
+                <AppText
+                  title={'3 services completed — 7 more for 10% off!'}
+                  textSize={1.6}
+                  textColor={AppColors.BLACK}
+                />
+              </View>
+            </View>
+            <LineBreak space={1} />
+            <View style={{ paddingHorizontal: responsiveWidth(18) }}>
+              <GradientProgressBar progress={0.65} />
+            </View>
+          </View>
+          <LineBreak space={2} />
+          <View style={{ paddingHorizontal: responsiveWidth(4) }}>
+            <AppText
+              title={'You Might Also Like'}
+              textSize={2.2}
+              textColor={AppColors.BLACK}
+            />
+          </View>
+          <LineBreak space={2} />
+          <FlatList
+            data={footerData}
+            renderItem={({ item, index }) => (
+              <View
+                style={[
+                  styles.card,
+                  { flexDirection: 'row', alignItems: 'center', gap: 15 },
+                ]}
+              >
+                <View
+                  style={[
+                    styles.iconBg,
+                    index == 1 && { backgroundColor: AppColors.purple_light },
+                  ]}
+                >
+                  {index == 0 ? (
+                    <Feather
+                      name={'calendar'}
+                      size={responsiveFontSize(3.5)}
+                      color={AppColors.green}
+                    />
+                  ) : (
+                    <Feather
+                      name={'star'}
+                      size={responsiveFontSize(3.5)}
+                      color={AppColors.purple_dark}
+                    />
+                  )}
+                </View>
+
+                <View>
+                  <AppText
+                    title={item.title}
+                    textSize={2}
+                    textColor={AppColors.BLACK}
+                  />
+                  <LineBreak space={1} />
+                  <AppText
+                    title={item.subTitle}
+                    textSize={1.8}
+                    textColor={AppColors.GRAY}
+                  />
+                </View>
+              </View>
+            )}
+          />
         </View>
+
+        <LineBreak space={2} />
+
+        <View style={{ alignItems: 'center' }}>
+          <AppButton
+            title={'Done it'}
+            handlePress={() => nav.navigate('Main', { screen: 'Home' })}
+          />
+        </View>
+
+        <LineBreak space={2} />
       </ScrollView>
     </SafeAreaView>
   );
@@ -271,6 +401,14 @@ const styles = StyleSheet.create({
     width: 60,
     height: 30,
     borderRadius: 12,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  iconBg: {
+    backgroundColor: AppColors.lightGreen,
+    width: responsiveWidth(15),
+    height: responsiveWidth(15),
+    borderRadius: 15,
     justifyContent: 'center',
     alignItems: 'center',
   },

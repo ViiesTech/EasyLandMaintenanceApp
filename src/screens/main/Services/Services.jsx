@@ -1,11 +1,14 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, ScrollView } from 'react-native';
+import AppColors from '../../../utils/AppColors';
+import HomeHeader from '../../../components/HomeHeader';
 
 const Services = () => {
   return (
-    <View>
+    <ScrollView style={{ flex: 1, backgroundColor: AppColors.WHITE }}>
+      <HomeHeader />
       <Text>Services</Text>
-    </View>
+    </ScrollView>
   );
 };
 

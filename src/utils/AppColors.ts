@@ -32,6 +32,9 @@ type Colors = {
     btnColor: string
     darkGreen: string
     lightGreen: string
+    light_yellow: string
+    purple_dark: string
+    purple_light: string
   };
 
 const AppColors: Colors = {
@@ -47,6 +50,8 @@ const AppColors: Colors = {
     PEACHCOLOUR: "#F7D794",
     INPUTBG: "#F5F5F5",
     BGCOLOURS: "#3CC835",
+    purple_dark: '#155DFC',
+    purple_light: '#DBEAFE',
     BGCOLOURS2: "#FE3F9B",
     PRIMARY:"#0088F0",
     TEXTCOLOR: "#494949",
@@ -55,7 +60,8 @@ const AppColors: Colors = {
     rightArrowCOlor: "#3D56F0",
     btnColor: '#242E42',
     ThemeColor: '#4CE5B1',
-    Yellow: '#FF9C12',
+    Yellow: '#FDC700',
+    light_yellow: '#FFF8EC',
     lightRed: '#FFD7D7',
     inputBgColor: '#F8F9FD',
     red: '#EB2022',
