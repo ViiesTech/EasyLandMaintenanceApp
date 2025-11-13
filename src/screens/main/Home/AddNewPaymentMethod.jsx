@@ -6,11 +6,16 @@ import LineBreak from '../../../components/LineBreak';
 import AppText from '../../../components/AppText';
 import AppColors from '../../../utils/AppColors';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { responsiveWidth } from '../../../utils/Responsive_Dimensions';
+import {
+  responsiveFontSize,
+  responsiveWidth,
+} from '../../../utils/Responsive_Dimensions';
 import { AppIcons } from '../../../assets/icons';
 import PayCard from '../../../components/PayCard';
 import AppTextInput from '../../../components/AppTextInput';
 import AppButton from './../../../components/AppButton';
+import Entypo from 'react-native-vector-icons/Entypo';
+import { useNavigation } from '@react-navigation/native';
 
 const addedCards = [
   { id: 1, icon: AppIcons.cart_two, title: '**** **** **** *368' },
@@ -19,6 +24,18 @@ const addedCards = [
 
 const AddNewPaymentMethod = () => {
   const [selectedCard, setSelectedCard] = useState('');
+  const [state, setState] = useState({
+    cardNumber: '',
+    validThru: '',
+    cvvNumber: '',
+  });
+  const [showAddNewPayment, setShowAddNewPayment] = useState(false);
+  const nav = useNavigation();
+
+  const onChangeHandler = (key, value) => {
+    setState(prev => ({ ...prev, [key]: value }));
+  };
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <KeyboardAvoidingView style={{ flex: 1 }} behavior="height">
@@ -60,46 +77,66 @@ const AddNewPaymentMethod = () => {
               icon: AppIcons.blank_cart,
               title: 'Visa Card',
             }}
+            rightIcon={
+              showAddNewPayment ? (
+                <Entypo
+                  name="chevron-small-down"
+                  size={responsiveFontSize(3)}
+                  color={AppColors.GRAY}
+                />
+              ) : null
+            }
+            onCardPress={() => setShowAddNewPayment(!showAddNewPayment)}
             index={1}
           />
 
           <LineBreak space={2} />
 
-          <View>
-            <AppTextInput
-              inputPlaceHolder={'Card Number'}
-              borderWidth={-1}
-              containerBg={AppColors.WHITE}
-              inputHeight={6}
-            />
-            <LineBreak space={2} />
-            <View
-              style={{ flexDirection: 'row', justifyContent: 'space-between' }}
-            >
+          {showAddNewPayment && (
+            <View>
               <AppTextInput
-                inputPlaceHolder={'Valid thru'}
-                inputWidth={40}
+                inputPlaceHolder={'Card Number'}
                 borderWidth={-1}
                 containerBg={AppColors.WHITE}
                 inputHeight={6}
+                value={state.cardNumber}
+                onChangeText={text => onChangeHandler('cardNumber', text)}
               />
-              <AppTextInput
-                inputPlaceHolder={'CVV'}
-                inputWidth={40}
-                borderWidth={-1}
-                containerBg={AppColors.WHITE}
-                inputHeight={6}
+              <LineBreak space={2} />
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                }}
+              >
+                <AppTextInput
+                  inputPlaceHolder={'Valid thru'}
+                  inputWidth={40}
+                  borderWidth={-1}
+                  containerBg={AppColors.WHITE}
+                  inputHeight={6}
+                  value={state.validThru}
+                  onChangeText={text => onChangeHandler('validThru', text)}
+                />
+                <AppTextInput
+                  inputPlaceHolder={'CVV'}
+                  inputWidth={40}
+                  borderWidth={-1}
+                  containerBg={AppColors.WHITE}
+                  inputHeight={6}
+                  value={state.cvvNumber}
+                  onChangeText={text => onChangeHandler('cvvNumber', text)}
+                />
+              </View>
+              <LineBreak space={4} />
+
+              <AppButton
+                title={'Add new Method'}
+                bgColor={AppColors.ThemeColor}
+                padding={15}
               />
             </View>
-          </View>
-
-          <LineBreak space={4} />
-
-          <AppButton
-            title={'Add new Method'}
-            bgColor={AppColors.ThemeColor}
-            padding={15}
-          />
+          )}
 
           <LineBreak space={2} />
         </View>

@@ -10,13 +10,17 @@ import Services from '../screens/main/Services/Services';
 import Tasks from '../screens/main/Tasks/Tasks';
 import Account from './../screens/main/Account/Account';
 import AppColors from '../utils/AppColors';
-import { responsiveFontSize, responsiveHeight } from '../utils/Responsive_Dimensions';
+import {
+  responsiveFontSize,
+  responsiveHeight,
+} from '../utils/Responsive_Dimensions';
 import ServicesProfile from './../screens/main/Home/ServicesProfile';
 import Messages from './../screens/main/Home/Messages';
 import IncomingCall from './../screens/main/Home/IncomingCall';
 import ServiceProgress from './../screens/main/Home/ServiceProgress';
 import ServiceComplete from './../screens/main/Home/ServiceComplete';
 import AddNewPaymentMethod from './../screens/main/Home/AddNewPaymentMethod';
+import AllDone from './../screens/main/Home/AllDone';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -33,7 +37,11 @@ const Main = () => {
       <Stack.Screen name="IncomingCall" component={IncomingCall} />
       <Stack.Screen name="ServiceProgress" component={ServiceProgress} />
       <Stack.Screen name="ServiceComplete" component={ServiceComplete} />
-      <Stack.Screen name="AddNewPaymentMethod" component={AddNewPaymentMethod} />
+      <Stack.Screen
+        name="AddNewPaymentMethod"
+        component={AddNewPaymentMethod}
+      />
+      <Stack.Screen name="AllDone" component={AllDone} />
     </Stack.Navigator>
   );
 };
@@ -49,20 +57,20 @@ function MyTabs() {
         tabBarStyle: {
           height: responsiveHeight(12),
           paddingTop: responsiveHeight(1.2),
-        position: 'absolute',
+          position: 'absolute',
           bottom: 0,
           left: 0,
           right: 0,
           elevation: 0,
           shadowColor: '#000',
-          shadowOffset: {width: 0, height: -3},
+          shadowOffset: { width: 0, height: -3 },
           shadowOpacity: 0.1,
           shadowRadius: 5,
         },
         tabBarLabelStyle: {
           paddingTop: responsiveHeight(0.5),
           fontSize: responsiveFontSize(1.6),
-        }
+        },
       }}
     >
       <Tab.Screen

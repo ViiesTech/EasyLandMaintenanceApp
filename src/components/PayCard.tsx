@@ -12,9 +12,10 @@ type Props = {
     index: number,
     selectedCard?: any,
     onCardPress?: any,
+    rightIcon?: any,
 }
 
-const PayCard = ({ item, index, selectedCard, onCardPress }: Props) => {
+const PayCard = ({ item, index, selectedCard, onCardPress, rightIcon }: Props) => {
     return (
         <TouchableOpacity
             style={{
@@ -39,11 +40,11 @@ const PayCard = ({ item, index, selectedCard, onCardPress }: Props) => {
                 textColor={selectedCard ? AppColors.WHITE : AppColors.BLACK}
             />
             <View style={{ flex: 1, alignItems: 'flex-end' }}>
-                <Entypo
+               {rightIcon ? rightIcon : <Entypo
                     name="chevron-small-right"
                     size={responsiveFontSize(3)}
                     color={selectedCard ? AppColors.WHITE : AppColors.GRAY}
-                />
+                />}
             </View>
         </TouchableOpacity>
     );

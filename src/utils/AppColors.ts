@@ -30,6 +30,8 @@ type Colors = {
     chatBgColor: string
     green: string
     btnColor: string
+    darkGreen: string
+    lightGreen: string
   };
 
 const AppColors: Colors = {
@@ -37,6 +39,8 @@ const AppColors: Colors = {
     WHITE: "#FFFFFF",
     BTNCOLOURS: "#104210",
     green: '#00A63E',
+    darkGreen: '#016630',
+    lightGreen: '#DCFCE7',
     GRAY: "#777777",
     BLUE: "#001AB0",
     DARKGRAY: "#939393",

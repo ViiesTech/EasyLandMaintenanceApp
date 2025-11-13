@@ -260,7 +260,11 @@ const ServiceComplete = () => {
             alignItems: 'center',
           }}
         >
-          <AppButton title={'Pay Now'} bgColor={AppColors.ThemeColor} />
+          <AppButton
+            title={'Pay Now'}
+            bgColor={AppColors.ThemeColor}
+            handlePress={() => nav.navigate('AllDone')}
+          />
         </View>
 
         <LineBreak space={2} />
