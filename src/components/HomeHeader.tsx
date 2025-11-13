@@ -5,12 +5,19 @@ import AppColors from '../utils/AppColors';
 import { responsiveHeight, responsiveWidth } from '../utils/Responsive_Dimensions';
 import { AppImages } from '../assets/images';
 import AppText from './AppText';
+import HeaderWithBack from './HeaderWithBack';
+import LineBreak from './LineBreak';
 
-const HomeHeader = () => {
+type Props = {
+    homeHead?: boolean,
+    title?: string,
+}
+
+const HomeHeader = ({ homeHead = true, title }: Props) => {
     return (
         <ImageBackground source={AppImages.header_bg} style={{ paddingTop: responsiveHeight(2), backgroundColor: AppColors.ThemeColor, height: responsiveHeight(12), width: responsiveWidth(100) }}>
 
-            <View style={{ paddingHorizontal: responsiveWidth(5), flexDirection: 'row', gap: 15, alignItems: 'center', height: responsiveHeight(12) }}>
+            {homeHead && <View style={{ paddingHorizontal: responsiveWidth(5), flexDirection: 'row', gap: 15, alignItems: 'center', height: responsiveHeight(12) }}>
                 <Image source={AppImages.user} style={{ width: 50, height: 50, borderRadius: 100 }} />
                 <View>
                     <AppText
@@ -25,7 +32,9 @@ const HomeHeader = () => {
                         textFontWeight
                     />
                 </View>
-            </View>
+            </View>}
+            {!homeHead && <LineBreak space={2} />}
+            {!homeHead && <HeaderWithBack bgColor={'transparent'} color={AppColors.BLACK} title={title} />}
         </ImageBackground>
     );
 };

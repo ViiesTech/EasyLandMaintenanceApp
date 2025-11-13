@@ -9,9 +9,11 @@ import { useNavigation } from '@react-navigation/native';
 
 type Props = {
     title?: string,
+    bgColor?: any,
+    color?: any,
 }
 
-const HeaderWithBack = ({ title }: Props) => {
+const HeaderWithBack = ({ title, bgColor, color }: Props) => {
     const nav = useNavigation();
 
     const onBackPress = () => {
@@ -25,7 +27,7 @@ const HeaderWithBack = ({ title }: Props) => {
                 alignItems: 'center',
                 paddingHorizontal: responsiveWidth(4),
                 paddingVertical: responsiveHeight(2),
-                backgroundColor: AppColors.WHITE,
+                backgroundColor: bgColor ? bgColor : AppColors.WHITE,
                 justifyContent: 'center',
             }}
         >
@@ -41,11 +43,11 @@ const HeaderWithBack = ({ title }: Props) => {
                 <Feather
                     name="arrow-left"
                     size={responsiveFontSize(3)}
-                    color={AppColors.GRAY}
+                    color={color ? color : AppColors.GRAY}
                 />
             </TouchableOpacity>
 
-            <AppText title={title} textSize={2.2} textColor={AppColors.BLACK} />
+            <AppText title={title} textSize={2.2} textColor={color ? color : AppColors.BLACK} />
         </View>
     );
 };
