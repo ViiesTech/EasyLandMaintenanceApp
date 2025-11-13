@@ -15,6 +15,8 @@ import ServicesProfile from './../screens/main/Home/ServicesProfile';
 import Messages from './../screens/main/Home/Messages';
 import IncomingCall from './../screens/main/Home/IncomingCall';
 import ServiceProgress from './../screens/main/Home/ServiceProgress';
+import ServiceComplete from './../screens/main/Home/ServiceComplete';
+import AddNewPaymentMethod from './../screens/main/Home/AddNewPaymentMethod';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -30,6 +32,8 @@ const Main = () => {
       <Stack.Screen name="Messages" component={Messages} />
       <Stack.Screen name="IncomingCall" component={IncomingCall} />
       <Stack.Screen name="ServiceProgress" component={ServiceProgress} />
+      <Stack.Screen name="ServiceComplete" component={ServiceComplete} />
+      <Stack.Screen name="AddNewPaymentMethod" component={AddNewPaymentMethod} />
     </Stack.Navigator>
   );
 };

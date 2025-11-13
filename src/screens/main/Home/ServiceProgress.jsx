@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AppColors from '../../../utils/AppColors';
@@ -14,8 +14,18 @@ import ServiceStatus from '../../../components/ServiceStatus';
 import OverallProgress from '../../../components/OverallProgress';
 import LineBreak from '../../../components/LineBreak';
 import ProfileCard from '../../../components/ProfileCard';
+import JobTimeline from '../../../components/JobTimeline';
+import { useNavigation } from '@react-navigation/native';
 
 const ServiceProgress = () => {
+  const nav = useNavigation();
+
+  useEffect(() => {
+    setTimeout(() => {
+      nav.navigate('ServiceComplete');
+    }, 2000);
+  }, []);
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <ServiceStatus
@@ -85,16 +95,24 @@ const ServiceProgress = () => {
             paddingVertical: responsiveHeight(2),
           }}
         >
-          <AppText title={'Job Timeline'} textSize={2} textColor={AppColors.BLACK} />
+          <AppText
+            title={'Job Timeline'}
+            textSize={2}
+            textColor={AppColors.BLACK}
+          />
+          <LineBreak space={2} />
+
+          <View>
+            <JobTimeline />
+          </View>
         </View>
       </View>
-      
+
       <LineBreak space={1} />
 
-      <View style={{paddingHorizontal: responsiveWidth(1)}}>        
-      <ProfileCard chatBgColor={AppColors.chatBgColor} />
+      <View style={{ paddingHorizontal: responsiveWidth(1) }}>
+        <ProfileCard chatBgColor={AppColors.chatBgColor} />
       </View>
-
     </SafeAreaView>
   );
 };
