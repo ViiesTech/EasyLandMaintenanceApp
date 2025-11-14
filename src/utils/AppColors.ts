@@ -35,6 +35,8 @@ type Colors = {
     light_yellow: string
     purple_dark: string
     purple_light: string
+    highDemand: string
+    discountColor: string
   };
 
 const AppColors: Colors = {
@@ -42,8 +44,10 @@ const AppColors: Colors = {
     WHITE: "#FFFFFF",
     BTNCOLOURS: "#104210",
     green: '#00A63E',
+    highDemand: '#42AAFF',
     darkGreen: '#016630',
     lightGreen: '#DCFCE7',
+    discountColor: '#A375FF',
     GRAY: "#777777",
     BLUE: "#001AB0",
     DARKGRAY: "#939393",
