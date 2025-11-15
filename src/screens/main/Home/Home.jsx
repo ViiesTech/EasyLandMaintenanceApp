@@ -1,11 +1,12 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   ScrollView,
   ImageBackground,
   TouchableOpacity,
   FlatList,
+  ActivityIndicator,
 } from 'react-native';
 import AppColors from '../../../utils/AppColors';
 import HomeHeader from '../../../components/HomeHeader';
@@ -25,28 +26,51 @@ import LinearGradient from 'react-native-linear-gradient';
 import PlusIcon from 'react-native-vector-icons/Feather';
 import RequestFormModal from '../../../components/RequestFormModal';
 import { useNavigation } from '@react-navigation/native';
+import ApiService from '../../../services/api';
 
-const popularServices = [
-  { id: 1, icon: AppIcons.sezer, title: 'Plant selection', bgColor: '#DCFCE7' },
-  { id: 2, icon: AppIcons.star, title: 'Cleaning', bgColor: '#DBEAFE' },
-  {
-    id: 3,
-    icon: AppIcons.insect,
-    title: 'Plant selection',
-    bgColor: '#FFE2E2',
-  },
-  {
-    id: 4,
-    icon: AppIcons.drops,
-    title: 'Irrigation Repair',
-    bgColor: '#CEFAFE',
-  },
-];
+// Icon mapping for service categories
+const iconMapping = {
+  'Plant Selection': AppIcons.sezer,
+  'Cleaning': AppIcons.star,
+  'Pest Control': AppIcons.insect,
+  'Irrigation Repair': AppIcons.drops,
+  'Lawn Mowing': AppIcons.sezer,
+  'Tree Trimming': AppIcons.star,
+};
+
+const bgColorMapping = {
+  'Plant Selection': '#DCFCE7',
+  'Cleaning': '#DBEAFE',
+  'Pest Control': '#FFE2E2',
+  'Irrigation Repair': '#CEFAFE',
+  'Lawn Mowing': '#DCFCE7',
+  'Tree Trimming': '#DBEAFE',
+};
 
 const Home = () => {
   const [location, setLocation] = useState('');
   const [visibleReqModal, setVisibleReqModal] = useState(false);
+  const [popularServices, setPopularServices] = useState([]);
+  const [loading, setLoading] = useState(true);
   const nav = useNavigation();
+
+  useEffect(() => {
+    fetchPopularServices();
+  }, []);
+
+  const fetchPopularServices = async () => {
+    try {
+      setLoading(true);
+      const response = await ApiService.getPopularServices();
+      if (response.success) {
+        setPopularServices(response.data);
+      }
+    } catch (error) {
+      console.error('Error fetching popular services:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <ScrollView style={{ flex: 1, backgroundColor: AppColors.WHITE }}>
@@ -101,42 +125,52 @@ const Home = () => {
         </View>
         <LineBreak space={1} />
         <View>
-          <FlatList
-            data={popularServices}
-            horizontal
-            contentContainerStyle={{ flex: 1, justifyContent: 'space-between' }}
-            renderItem={({ item }) => (
-              <TouchableOpacity
-                style={{
-                  borderWidth: 1,
-                  borderColor: AppColors.LIGHTGRAY,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  width: responsiveWidth(21),
-                  height: responsiveHeight(12),
-                  borderRadius: 10,
-                }}
-                onPress={() => nav.navigate("ServicesProfile")}
-              >
-                <View
+          {loading ? (
+            <View style={{ alignItems: 'center', paddingVertical: responsiveHeight(5) }}>
+              <ActivityIndicator size="large" color={AppColors.ThemeColor} />
+            </View>
+          ) : (
+            <FlatList
+              data={popularServices}
+              horizontal
+              contentContainerStyle={{ flex: 1, justifyContent: 'space-between' }}
+              renderItem={({ item }) => (
+                <TouchableOpacity
                   style={{
-                    backgroundColor: item.bgColor,
-                    padding: 8,
+                    borderWidth: 1,
+                    borderColor: AppColors.LIGHTGRAY,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    width: responsiveWidth(21),
+                    height: responsiveHeight(12),
                     borderRadius: 10,
                   }}
+                  onPress={() => nav.navigate("ServicesProfile", { service: item })}
                 >
-                  <SVGXml icon={item.icon} width={30} height={30} />
-                </View>
-                <LineBreak space={1} />
-                <AppText
-                  title={item.title}
-                  textSize={1}
-                  textAlignment={'center'}
-                  textColor={AppColors.BLACK}
-                />
-              </TouchableOpacity>
-            )}
-          />
+                  <View
+                    style={{
+                      backgroundColor: bgColorMapping[item.title] || item.bgColor || '#DCFCE7',
+                      padding: 8,
+                      borderRadius: 10,
+                    }}
+                  >
+                    <SVGXml 
+                      icon={iconMapping[item.title] || AppIcons.sezer} 
+                      width={30} 
+                      height={30} 
+                    />
+                  </View>
+                  <LineBreak space={1} />
+                  <AppText
+                    title={item.title}
+                    textSize={1}
+                    textAlignment={'center'}
+                    textColor={AppColors.BLACK}
+                  />
+                </TouchableOpacity>
+              )}
+            />
+          )}
         </View>
         <LineBreak space={2} />
 

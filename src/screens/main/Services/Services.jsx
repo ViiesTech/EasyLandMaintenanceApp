@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
-import { View, ScrollView, StyleSheet, FlatList } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, ScrollView, StyleSheet, FlatList, ActivityIndicator } from 'react-native';
 import AppColors from '../../../utils/AppColors';
 import HomeHeader from '../../../components/HomeHeader';
 import {
@@ -16,69 +16,63 @@ import Feather from 'react-native-vector-icons/Feather';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import SVGXml from '../../../components/SVGXML';
 import { AppIcons } from '../../../assets/icons';
+import ApiService from '../../../services/api';
 
-const servicesData = [
-  {
-    id: 1,
-    title: 'Plant Selection',
-    price: '$49',
-    subtitle: 'Starting cost',
-    icon: 'leaf',
-    bgColor: '#E8F5E9',
-    iconColor: '#00A63E',
-  },
-  {
-    id: 2,
-    title: 'Cleaning',
-    price: '$45',
-    subtitle: 'Starting cost',
-    icon: 'star',
-    bgColor: '#E3F2FD',
-    iconColor: '#1976D2',
-  },
-  {
-    id: 3,
-    title: 'Pest Control',
-    price: '$45',
-    subtitle: 'Starting cost',
-    icon: 'bug',
-    bgColor: '#FFEBEE',
-    iconColor: '#D32F2F',
-  },
-  {
-    id: 4,
-    title: 'Irrigation Repair',
-    price: '$55',
-    subtitle: 'Starting cost',
-    icon: 'tint',
-    bgColor: '#CEFAFE',
-    iconColor: '#00897B',
-  },
-  {
-    id: 5,
-    title: 'Pest Control',
-    price: '$45',
-    subtitle: 'Starting cost',
-    icon: 'bug',
-    bgColor: '#FFEBEE',
-    iconColor: '#D32F2F',
-  },
-];
+// Icon mapping for service categories
+const iconMapping = {
+  'Plant Selection': AppIcons.sezer,
+  'Cleaning': AppIcons.star,
+  'Pest Control': AppIcons.insect,
+  'Irrigation Repair': AppIcons.drops,
+  'Lawn Mowing': AppIcons.sezer,
+  'Tree Trimming': AppIcons.star,
+};
 
 const Services = () => {
+  const [services, setServices] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState('');
+
+  useEffect(() => {
+    fetchServices();
+  }, []);
+
+  const fetchServices = async () => {
+    try {
+      setLoading(true);
+      const response = await ApiService.getServices();
+      if (response.success) {
+        setServices(response.data);
+      }
+    } catch (error) {
+      console.error('Error fetching services:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSearch = async () => {
+    if (searchQuery.trim()) {
+      try {
+        setLoading(true);
+        const response = await ApiService.getServices({ search: searchQuery });
+        if (response.success) {
+          setServices(response.data);
+        }
+      } catch (error) {
+        console.error('Error searching services:', error);
+      } finally {
+        setLoading(false);
+      }
+    } else {
+      fetchServices();
+    }
+  };
   const renderServiceCard = ({ item, index }) => (
     <View style={styles.cardContainer}>
       <View style={styles.cardContent}>
-        <View style={[styles.iconContainer, { backgroundColor: item.bgColor }]}>
-          {index == 0 ? (
-            <SVGXml icon={AppIcons.sezer} width={25} height={25} />
-          ) : (
-            <FontAwesome
-              name={item.icon}
-              size={responsiveFontSize(4)}
-              color={item.iconColor}
-            />
-          )}
+        <View style={[styles.iconContainer, { backgroundColor: item.bgColor || '#E8F5E9' }]}>
+            <SVGXml icon={iconMapping[item.title] || AppIcons.sezer} width={25} height={25} />
         </View>
 
         <View style={styles.textContainer}>
@@ -90,13 +84,13 @@ const Services = () => {
           <LineBreak space={0.5} />
           <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
             <AppText
-              title={item.price}
+              title={`$${item.price?.startingCost || 0}`}
               textSize={2}
               textColor={AppColors.ThemeColor}
               textFontWeight
             />
             <AppText
-              title={item.subtitle}
+              title={'Starting cost'}
               textSize={1.7}
               textColor={AppColors.GRAY}
             />
@@ -105,18 +99,18 @@ const Services = () => {
           <View style={styles.buttonContainer}>
             <View style={styles.buttonRow}>
               <AppButton
-                title={'In High Demand'}
+                title={item.availability === 'high_demand' ? 'In High Demand' : 'Available'}
                 buttoWidth={30}
                 padding={5}
                 textSize={1.5}
                 textFontWeight={false}
-                bgColor={AppColors.highDemand}
+                bgColor={item.availability === 'high_demand' ? AppColors.highDemand : AppColors.ThemeColor}
               />
             </View>
             <LineBreak space={0.5} />
             <View style={styles.buttonRow}>
               <AppButton
-                title={'Discount Available'}
+                title={item.rating?.average ? `★ ${item.rating.average.toFixed(1)}` : 'New Service'}
                 buttonBg={AppColors.purple_light}
                 buttoWidth={30}
                 padding={5}
@@ -150,21 +144,37 @@ const Services = () => {
           borderWidth={-1}
           borderRadius={25}
           containerBg={'#EFEFEF'}
+          value={searchQuery}
+          onChangeText={setSearchQuery}
+          onSubmitEditing={handleSearch}
         />
       </View>
 
       <LineBreak space={2} />
 
-      <View style={{ paddingHorizontal: responsiveWidth(4) }}>
-        <FlatList
-          data={servicesData}
-          renderItem={renderServiceCard}
-          keyExtractor={item => item.id.toString()}
-          scrollEnabled={false}
-          ListFooterComponent={<LineBreak space={8} />}
-          contentContainerStyle={{ gap: responsiveHeight(1.5) }}
-        />
-      </View>
+      {loading ? (
+        <View style={{ alignItems: 'center', marginTop: responsiveHeight(10) }}>
+          <ActivityIndicator size="large" color={AppColors.ThemeColor} />
+          <LineBreak space={2} />
+          <AppText title="Loading services..." textColor={AppColors.GRAY} />
+        </View>
+      ) : (
+        <View style={{ paddingHorizontal: responsiveWidth(4) }}>
+          <FlatList
+            data={services}
+            renderItem={renderServiceCard}
+            keyExtractor={item => item._id}
+            scrollEnabled={false}
+            ListEmptyComponent={() => (
+              <View style={{ alignItems: 'center', marginTop: responsiveHeight(10) }}>
+                <AppText title="No services found" textColor={AppColors.GRAY} />
+              </View>
+            )}
+            ListFooterComponent={<LineBreak space={8} />}
+            contentContainerStyle={{ gap: responsiveHeight(1.5) }}
+          />
+        </View>
+      )}
 
       <LineBreak space={5} />
     </ScrollView>

@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import {View, TextInput} from 'react-native';
+import { View, TextInput } from 'react-native';
 import {
   responsiveHeight,
   responsiveWidth,
@@ -25,12 +25,13 @@ type props = {
   borderRadius?: any;
   borderBottomWidth?: any;
   borderBottomColor?: any;
-  borderWidth?:any;
-  borderColor?:any;
-  maxLength?:any;
-  keyboardType?:any;
-  textAlign?:any;
-  editable?:any;
+  borderWidth?: any;
+  borderColor?: any;
+  maxLength?: any;
+  keyboardType?: any;
+  textAlign?: any;
+  editable?: any;
+  paddingVertical?: any;
 };
 const AppTextInput = ({
   logo,
@@ -55,6 +56,7 @@ const AppTextInput = ({
   keyboardType,
   textAlign,
   editable,
+  paddingVertical,
 }: props) => {
   return (
     <View
@@ -62,7 +64,7 @@ const AppTextInput = ({
         flexDirection: 'row',
         backgroundColor: containerBg,
         paddingHorizontal: responsiveWidth(2),
-        paddingVertical: borderBottomWidth ? 0 : 5,
+        paddingVertical: borderBottomWidth ? 0 : paddingVertical ? paddingVertical : 5,
         borderRadius: borderRadius ? borderRadius : 12,
         alignItems: multiline ? 'flex-start' : 'center',
         gap: 5,

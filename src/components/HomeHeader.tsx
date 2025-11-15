@@ -15,7 +15,7 @@ type Props = {
 
 const HomeHeader = ({ homeHead = true, title }: Props) => {
     return (
-        <ImageBackground source={AppImages.header_bg} style={{ paddingTop: responsiveHeight(2), backgroundColor: AppColors.ThemeColor, height: responsiveHeight(12), width: responsiveWidth(100) }}>
+        <ImageBackground source={AppImages.header_bg} style={{ paddingTop: responsiveHeight(2), backgroundColor: AppColors.ThemeColor, height: homeHead ? responsiveHeight(12) : responsiveHeight(10), width: responsiveWidth(100) }}>
 
             {homeHead && <View style={{ paddingHorizontal: responsiveWidth(5), flexDirection: 'row', gap: 15, alignItems: 'center', height: responsiveHeight(12) }}>
                 <Image source={AppImages.user} style={{ width: 50, height: 50, borderRadius: 100 }} />
@@ -33,7 +33,6 @@ const HomeHeader = ({ homeHead = true, title }: Props) => {
                     />
                 </View>
             </View>}
-            {!homeHead && <LineBreak space={2} />}
             {!homeHead && <HeaderWithBack bgColor={'transparent'} color={AppColors.BLACK} title={title} />}
         </ImageBackground>
     );

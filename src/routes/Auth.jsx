@@ -12,13 +12,10 @@ import NewPassword from './../screens/auth/NewPassword';
 import SelectType from './../screens/auth/SelectType';
 import EnableLocation from './../screens/auth/EnableLocation';
 import CompleteYourProfile from './../screens/auth/CompleteYourProfile';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import AppColors from '../utils/AppColors';
 
 const Stack = createStackNavigator();
 const Auth = () => {
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: AppColors.WHITE }}>
       <Stack.Navigator
         screenOptions={{ headerShown: false }}
         initialRouteName="Splash"
@@ -38,7 +35,6 @@ const Auth = () => {
           component={CompleteYourProfile}
         />
       </Stack.Navigator>
-    </SafeAreaView>
   );
 };
 

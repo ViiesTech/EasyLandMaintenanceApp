@@ -21,6 +21,10 @@ import ServiceProgress from './../screens/main/Home/ServiceProgress';
 import ServiceComplete from './../screens/main/Home/ServiceComplete';
 import AddNewPaymentMethod from './../screens/main/Home/AddNewPaymentMethod';
 import AllDone from './../screens/main/Home/AllDone';
+import EditAccount from './../screens/main/Account/EditAccount';
+import Help from './../screens/main/Account/Help';
+import PrivacyPolicy from './../screens/main/Account/PrivacyPolicy';
+import TermsAndConditions from './../screens/main/Account/TermsAndConditions';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -42,6 +46,10 @@ const Main = () => {
         component={AddNewPaymentMethod}
       />
       <Stack.Screen name="AllDone" component={AllDone} />
+      <Stack.Screen name="EditAccount" component={EditAccount} />
+      <Stack.Screen name="Help" component={Help} />
+      <Stack.Screen name="PrivacyPolicy" component={PrivacyPolicy} />
+      <Stack.Screen name="TermsAndConditions" component={TermsAndConditions} />
     </Stack.Navigator>
   );
 };
@@ -55,7 +63,7 @@ function MyTabs() {
         tabBarActiveTintColor: '#424758',
         tabBarInactiveTintColor: AppColors.GRAY,
         tabBarStyle: {
-          height: responsiveHeight(12),
+          height: 80,
           paddingTop: responsiveHeight(1.2),
           position: 'absolute',
           bottom: 0,

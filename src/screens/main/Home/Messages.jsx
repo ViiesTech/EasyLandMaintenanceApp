@@ -1,6 +1,12 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import { View, Image, TouchableOpacity } from 'react-native';
+import {
+  View,
+  Image,
+  TouchableOpacity,
+  KeyboardAvoidingView,
+  Platform,
+} from 'react-native';
 import AppColors from '../../../utils/AppColors';
 import {
   responsiveFontSize,
@@ -13,11 +19,13 @@ import { AppImages } from '../../../assets/images';
 import { useNavigation } from '@react-navigation/native';
 import ChatComp from '../../../components/ChatComp';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { Line } from 'react-native-svg';
+import LineBreak from '../../../components/LineBreak';
 
 const Messages = () => {
   const nav = useNavigation();
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: AppColors.WHITE }}>
+    <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={{ flex: 1 }}>
       <View
         style={{
           backgroundColor: AppColors.ThemeColor,
@@ -61,7 +69,7 @@ const Messages = () => {
       <View style={{ flex: 1 }}>
         <ChatComp />
       </View>
-    </SafeAreaView>
+    </KeyboardAvoidingView>
   );
 };
 
