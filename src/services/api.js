@@ -145,6 +145,16 @@ class ApiService {
     return response;
   }
 
+  // Social login (Google/Facebook)
+  async socialLogin(socialData) {
+    const response = await this.post('/auth/social-login', socialData);
+    if (response.success && response.token) {
+      await this.saveToken(response.token);
+      await this.saveUser(response.data);
+    }
+    return response;
+  }
+
   // Logout user
   async logout() {
     await this.removeToken();

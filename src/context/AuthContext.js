@@ -1,5 +1,6 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import ApiService from '../services/api';
+import { auth, GoogleSignin, LoginManager, AccessToken } from '../config/firebaseConfig';
 
 const AuthContext = createContext({});
 
@@ -80,6 +81,90 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  // Google Sign-In
+  const signInWithGoogle = async () => {
+    try {
+      // Check if device supports Google Play
+      await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
+      
+      // Get user's ID token
+      const { idToken } = await GoogleSignin.signIn();
+      
+      // Create a Google credential with the token
+      const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+      
+      // Sign-in the user with the credential
+      const userCredential = await auth().signInWithCredential(googleCredential);
+      
+      // Send Firebase user data to backend for verification/registration
+      const firebaseUser = userCredential.user;
+      const response = await ApiService.socialLogin({
+        provider: 'google',
+        providerId: firebaseUser.uid,
+        email: firebaseUser.email,
+        fullName: firebaseUser.displayName,
+        profilePicture: firebaseUser.photoURL,
+      });
+      
+      if (response.success) {
+        setUser(response.data);
+        setIsAuthenticated(true);
+        return { success: true };
+      }
+      
+      return { success: false, error: 'Social login failed' };
+    } catch (error) {
+      console.error('Google Sign-In error:', error);
+      return { success: false, error: error.message };
+    }
+  };
+
+  // Facebook Sign-In
+  const signInWithFacebook = async () => {
+    try {
+      // Attempt login with permissions
+      const result = await LoginManager.logInWithPermissions(['public_profile', 'email']);
+      
+      if (result.isCancelled) {
+        return { success: false, error: 'User cancelled the login process' };
+      }
+      
+      // Get the access token
+      const data = await AccessToken.getCurrentAccessToken();
+      
+      if (!data) {
+        return { success: false, error: 'Something went wrong obtaining access token' };
+      }
+      
+      // Create a Facebook credential with the access token
+      const facebookCredential = auth.FacebookAuthProvider.credential(data.accessToken);
+      
+      // Sign-in the user with the credential
+      const userCredential = await auth().signInWithCredential(facebookCredential);
+      
+      // Send Firebase user data to backend for verification/registration
+      const firebaseUser = userCredential.user;
+      const response = await ApiService.socialLogin({
+        provider: 'facebook',
+        providerId: firebaseUser.uid,
+        email: firebaseUser.email,
+        fullName: firebaseUser.displayName,
+        profilePicture: firebaseUser.photoURL,
+      });
+      
+      if (response.success) {
+        setUser(response.data);
+        setIsAuthenticated(true);
+        return { success: true };
+      }
+      
+      return { success: false, error: 'Social login failed' };
+    } catch (error) {
+      console.error('Facebook Sign-In error:', error);
+      return { success: false, error: error.message };
+    }
+  };
+
   const value = {
     user,
     loading,
@@ -88,6 +173,8 @@ export const AuthProvider = ({ children }) => {
     register,
     logout,
     updateUserProfile,
+    signInWithGoogle,
+    signInWithFacebook,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

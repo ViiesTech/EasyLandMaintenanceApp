@@ -19,8 +19,12 @@ const Login = () => {
     password: '',
   });
   const [loading, setLoading] = useState(false);
+  const [socialLoading, setSocialLoading] = useState({
+    google: false,
+    facebook: false,
+  });
   const nav = useNavigation();
-  const { login } = useAuth();
+  const { login, signInWithGoogle, signInWithFacebook } = useAuth();
 
   const onChangeText = (key, value) => {
     setState(prev => ({ ...prev, [key]: value }));
@@ -44,6 +48,38 @@ const Login = () => {
       Alert.alert('Error', error.message || 'Something went wrong');
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleGoogleSignIn = async () => {
+    setSocialLoading({ ...socialLoading, google: true });
+    try {
+      const result = await signInWithGoogle();
+      if (result.success) {
+        nav.navigate('Main');
+      } else {
+        Alert.alert('Google Sign-In Failed', result.error || 'Something went wrong');
+      }
+    } catch (error) {
+      Alert.alert('Error', error.message || 'Google sign-in failed');
+    } finally {
+      setSocialLoading({ ...socialLoading, google: false });
+    }
+  };
+
+  const handleFacebookSignIn = async () => {
+    setSocialLoading({ ...socialLoading, facebook: true });
+    try {
+      const result = await signInWithFacebook();
+      if (result.success) {
+        nav.navigate('Main');
+      } else {
+        Alert.alert('Facebook Sign-In Failed', result.error || 'Something went wrong');
+      }
+    } catch (error) {
+      Alert.alert('Error', error.message || 'Facebook sign-in failed');
+    } finally {
+      setSocialLoading({ ...socialLoading, facebook: false });
     }
   };
 
@@ -110,16 +146,18 @@ const Login = () => {
         />
         <LineBreak space={2} />
         <AppButton
-          title={'Continue with Facebook'}
+          title={socialLoading.facebook ? 'Signing in...' : 'Continue with Facebook'}
           bgColor={AppColors.ThemeColor}
           textColor={AppColors.WHITE}
           leftIcon={
             <SVGXml icon={AppIcons.facebook_white} width={15} height={15} />
           }
+          handlePress={handleFacebookSignIn}
+          disabled={socialLoading.facebook || socialLoading.google}
         />
         <LineBreak space={2} />
         <AppButton
-          title={'Continue with Google'}
+          title={socialLoading.google ? 'Signing in...' : 'Continue with Google'}
           bgColor={AppColors.WHITE}
           borderWidth={1}
           borderColor={AppColors.LIGHTGRAY}
@@ -127,6 +165,8 @@ const Login = () => {
           leftIcon={
             <SVGXml icon={AppIcons.google_black} width={15} height={15} />
           }
+          handlePress={handleGoogleSignIn}
+          disabled={socialLoading.google || socialLoading.facebook}
         />
         <LineBreak space={2} />
         <View style={{ flexDirection: 'row', gap: 5, alignItems: 'center' }}>

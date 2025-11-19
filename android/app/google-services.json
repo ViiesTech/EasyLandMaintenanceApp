@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "587798355608",
+    "project_id": "easylandmantainace",
+    "storage_bucket": "easylandmantainace.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:587798355608:android:514db18d2a6cfcb78cbaed",
+        "android_client_info": {
+          "package_name": "com.easylandmaintenance"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "587798355608-uor67pqltsbakrtcgrkrnnlg8ej360jl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.easylandmaintenance",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "587798355608-h6or10sjo40q1t8sk6mqk1h7vpknj2b1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCaz0AXgXIav1GDT9gcrYPgZ-7nHSh_PtE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "587798355608-h6or10sjo40q1t8sk6mqk1h7vpknj2b1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

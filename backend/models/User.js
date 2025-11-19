@@ -54,6 +54,15 @@ const userSchema = new mongoose.Schema({
   location: {
     type: String
   },
+  authProvider: {
+    type: String,
+    enum: ['local', 'google', 'facebook'],
+    default: 'local'
+  },
+  providerId: {
+    type: String,
+    sparse: true
+  },
   isEmailVerified: {
     type: Boolean,
     default: false
@@ -78,11 +87,18 @@ const userSchema = new mongoose.Schema({
 
 // Encrypt password before saving
 userSchema.pre('save', async function(next) {
+  // Skip password hashing for social auth users or if password not modified
   if (!this.isModified('password')) {
-    next();
+    return next();
   }
-  const salt = await bcrypt.genSalt(10);
-  this.password = await bcrypt.hash(this.password, salt);
+  
+  // Only hash if it's not already hashed
+  if (this.password && this.password.length < 60) {
+    const salt = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(this.password, salt);
+  }
+  
+  next();
 });
 
 // Match user entered password to hashed password in database
