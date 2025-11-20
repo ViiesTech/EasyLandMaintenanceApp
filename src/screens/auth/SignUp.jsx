@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useState } from 'react';
-import { View, KeyboardAvoidingView, TouchableOpacity, Alert, ActivityIndicator } from 'react-native';
+import { View, KeyboardAvoidingView, TouchableOpacity } from 'react-native';
 import AuthHeader from '../../components/AuthHeader';
 import AppColors from '../../utils/AppColors';
 import AppTextInput from '../../components/AppTextInput';
@@ -19,7 +19,6 @@ const SignUp = () => {
     number: '',
     password: '',
   });
-  const [loading, setLoading] = useState(false);
   const nav = useNavigation();
   const { register } = useAuth();
 
@@ -28,35 +27,14 @@ const SignUp = () => {
   };
 
   const handleSignUp = async () => {
-    if (!state.name || !state.email || !state.password) {
-      Alert.alert('Error', 'Please fill in all required fields');
-      return;
-    }
-
-    setLoading(true);
-    try {
-      const result = await register({
-        fullName: state.name,
-        email: state.email,
-        password: state.password,
-        phone: state.number,
-      });
-
-      if (result.success) {
-        Alert.alert('Success', 'Account created successfully!', [
-          {
-            text: 'OK',
-            onPress: () => nav.navigate('Main'),
-          },
-        ]);
-      } else {
-        Alert.alert('Registration Failed', result.error || 'Unable to create account');
-      }
-    } catch (error) {
-      Alert.alert('Error', error.message || 'Something went wrong');
-    } finally {
-      setLoading(false);
-    }
+    // Just navigate without validation
+    await register({
+      fullName: state.name,
+      email: state.email,
+      password: state.password,
+      phone: state.number,
+    });
+    nav.navigate('EnableLocation');
   };
 
   return (
@@ -108,16 +86,10 @@ const SignUp = () => {
         />
         <LineBreak space={2} />
         <AppButton
-          title={loading ? 'Creating Account...' : 'Sign up'}
+          title={'Sign up'}
           bgColor={AppColors.BLACK}
           handlePress={handleSignUp}
-          disabled={loading}
         />
-        {loading && (
-          <View style={{ position: 'absolute', top: '50%' }}>
-            <ActivityIndicator size="large" color={AppColors.ThemeColor} />
-          </View>
-        )}
         <LineBreak space={2} />
         <AppText
           title={'Or Sign up With'}

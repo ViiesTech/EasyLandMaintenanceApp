@@ -257,68 +257,6 @@ exports.verifyPhone = async (req, res, next) => {
     next(error);
   }
 };
-
-// @desc    Social login (Google/Facebook)
-// @route   POST /api/auth/social-login
-// @access  Public
-exports.socialLogin = async (req, res, next) => {
-  try {
-    const { provider, providerId, email, fullName, profilePicture } = req.body;
-
-    // Validate required fields
-    if (!provider || !providerId || !email) {
-      return res.status(400).json({
-        success: false,
-        message: 'Provider, providerId, and email are required'
-      });
-    }
-
-    // Check if user exists by email or providerId
-    let user = await User.findOne({
-      $or: [
-        { email },
-        { providerId, authProvider: provider }
-      ]
-    });
-
-    if (!user) {
-      // Create new user with social auth
-      user = await User.create({
-        fullName: fullName || 'User',
-        email,
-        authProvider: provider,
-        providerId,
-        profileImage: profilePicture,
-        userType: 'customer',
-        isEmailVerified: true, // Auto-verify social login users
-        password: crypto.randomBytes(16).toString('hex') // Generate random password (won't be used)
-      });
-    } else {
-      // Update existing user's social auth info if not already set
-      if (!user.authProvider || user.authProvider === 'local') {
-        user.authProvider = provider;
-        user.providerId = providerId;
-      }
-      
-      // Update profile picture if provided and not already set
-      if (profilePicture && !user.profileImage) {
-        user.profileImage = profilePicture;
-      }
-      
-      // Verify email for social login
-      if (!user.isEmailVerified) {
-        user.isEmailVerified = true;
-      }
-      
-      await user.save();
-    }
-
-    sendTokenResponse(user, 200, res);
-  } catch (error) {
-    next(error);
-  }
-};
-
 // Helper function to get token from model, create cookie and send response
 const sendTokenResponse = (user, statusCode, res) => {
   // Create token

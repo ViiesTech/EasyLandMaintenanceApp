@@ -144,7 +144,7 @@ const Account = () => {
       <View style={styles.profileCardWrapper}>
         <View style={styles.profileCard}>
           <Image
-            source={user?.profileImage ? { uri: user.profileImage } : AppImages.first_banner_bg}
+            source={user?.profileImage ? { uri: user.profileImage } : AppImages.avatar}
             style={styles.profileImage}
           />
           <LineBreak space={5} />

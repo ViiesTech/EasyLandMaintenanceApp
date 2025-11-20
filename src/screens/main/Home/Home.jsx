@@ -26,7 +26,42 @@ import LinearGradient from 'react-native-linear-gradient';
 import PlusIcon from 'react-native-vector-icons/Feather';
 import RequestFormModal from '../../../components/RequestFormModal';
 import { useNavigation } from '@react-navigation/native';
-import ApiService from '../../../services/api';
+
+// Dummy popular services data
+const DUMMY_POPULAR_SERVICES = [
+  {
+    _id: '1',
+    title: 'Plant Selection',
+    category: 'Plant Selection',
+    description: 'Professional lawn mowing service',
+    price: { startingCost: 50 },
+    rating: { average: 4.5, count: 120 },
+  },
+  {
+    _id: '2',
+    title: 'Cleaning',
+    category: 'Cleaning',
+    description: 'Expert tree trimming and pruning',
+    price: { startingCost: 75 },
+    rating: { average: 4.8, count: 85 },
+  },
+  {
+    _id: '3',
+    title: 'Pest Control',
+    category: 'Pest Control',
+    description: 'Complete pest control solutions',
+    price: { startingCost: 60 },
+    rating: { average: 4.6, count: 95 },
+  },
+  {
+    _id: '4',
+    title: 'Irrigation Repair',
+    category: 'Irrigation Repair',
+    description: 'Expert Irrigation Repair and consultation',
+    price: { startingCost: 40 },
+    rating: { average: 4.7, count: 110 },
+  },
+];
 
 // Icon mapping for service categories
 const iconMapping = {
@@ -61,10 +96,9 @@ const Home = () => {
   const fetchPopularServices = async () => {
     try {
       setLoading(true);
-      const response = await ApiService.getPopularServices();
-      if (response.success) {
-        setPopularServices(response.data);
-      }
+      // Simulate API delay
+      await new Promise(resolve => setTimeout(resolve, 500));
+      setPopularServices(DUMMY_POPULAR_SERVICES);
     } catch (error) {
       console.error('Error fetching popular services:', error);
     } finally {

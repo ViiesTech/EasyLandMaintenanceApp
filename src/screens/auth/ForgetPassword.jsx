@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useState } from 'react';
-import { View, KeyboardAvoidingView, TouchableOpacity, Alert, ActivityIndicator } from 'react-native';
+import { View, KeyboardAvoidingView, TouchableOpacity, Alert } from 'react-native';
 import AppColors from '../../utils/AppColors';
 import AuthHeader from '../../components/AuthHeader';
 import LineBreak from '../../components/LineBreak';
@@ -9,11 +9,9 @@ import AppButton from '../../components/AppButton';
 import { responsiveWidth } from '../../utils/Responsive_Dimensions';
 import AppText from '../../components/AppText';
 import { useNavigation } from '@react-navigation/native';
-import ApiService from '../../services/api';
 
 const ForgetPassword = () => {
   const [email, setEmail] = useState('');
-  const [loading, setLoading] = useState(false);
   const nav = useNavigation();
 
   const validateEmail = (email) => {
@@ -21,7 +19,7 @@ const ForgetPassword = () => {
     return emailRegex.test(email);
   };
 
-  const handleSendCode = async () => {
+  const handleSendCode = () => {
     // Validate email
     if (!email.trim()) {
       Alert.alert('Error', 'Please enter your email address');
@@ -33,32 +31,8 @@ const ForgetPassword = () => {
       return;
     }
 
-    setLoading(true);
-    try {
-      const response = await ApiService.forgotPassword(email);
-      
-      if (response.success) {
-        Alert.alert(
-          'Success',
-          'Password reset code has been sent to your email',
-          [
-            {
-              text: 'OK',
-              onPress: () => nav.navigate('EnterPassCode', { email }),
-            },
-          ]
-        );
-      } else {
-        Alert.alert('Error', response.message || 'Failed to send reset code');
-      }
-    } catch (error) {
-      Alert.alert(
-        'Error',
-        error.message || 'Unable to send reset code. Please try again later.'
-      );
-    } finally {
-      setLoading(false);
-    }
+    // Navigate to code entry screen
+    nav.navigate('EnterPassCode', { email });
   };
 
   return (

@@ -13,4 +13,6 @@ export const AppImages = {
     animation: require('./animation.png'),
     dotsLeft: require('./dotsLeft.png'),
     dotsRight: require('./dotsRight.png'),
+    avatar: require('./Avatar.png'),
+    ongoing_one: require('./ongoing_one.png'),
 };

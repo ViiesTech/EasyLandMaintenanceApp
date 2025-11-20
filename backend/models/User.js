@@ -54,15 +54,6 @@ const userSchema = new mongoose.Schema({
   location: {
     type: String
   },
-  authProvider: {
-    type: String,
-    enum: ['local', 'google', 'facebook'],
-    default: 'local'
-  },
-  providerId: {
-    type: String,
-    sparse: true
-  },
   isEmailVerified: {
     type: Boolean,
     default: false

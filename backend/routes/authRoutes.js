@@ -5,7 +5,6 @@ const { validate } = require('../middleware/validator');
 const {
   register,
   login,
-  socialLogin,
   getMe,
   updateProfile,
   updatePassword,
@@ -30,16 +29,9 @@ const loginValidation = [
   body('password').notEmpty().withMessage('Password is required')
 ];
 
-const socialLoginValidation = [
-  body('provider').isIn(['google', 'facebook']).withMessage('Invalid provider'),
-  body('providerId').notEmpty().withMessage('Provider ID is required'),
-  body('email').isEmail().withMessage('Please provide a valid email')
-];
-
 // Public routes
 router.post('/register', registerValidation, validate, register);
 router.post('/login', loginValidation, validate, login);
-router.post('/social-login', socialLoginValidation, validate, socialLogin);
 router.post('/forgot-password', forgotPassword);
 router.post('/reset-password/:token', resetPassword);
 router.post('/verify-email', protect, verifyEmail);

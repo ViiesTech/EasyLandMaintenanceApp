@@ -25,13 +25,92 @@ import SVGXml from '../../../components/SVGXML';
 import { AppIcons } from '../../../assets/icons';
 import AppButton from '../../../components/AppButton';
 import { StarRatingDisplay } from 'react-native-star-rating-widget';
-import ApiService from '../../../services/api';
+
+// Dummy bookings data
+const DUMMY_BOOKINGS = {
+  ongoing: [
+    {
+      _id: '1',
+      service: { title: 'Full Service Plant Selection', category: 'Lawn Mowing' },
+      scheduledDate: '2025-11-25T16:30:00.000Z',
+      status: 'confirmed',
+      pricing: { totalPrice: 50 },
+      location: { address: '123 Main St, Springfield' },
+    },
+    {
+      _id: '2',
+      service: { title: 'Cleaning', category: 'Tree Trimming' },
+      scheduledDate: '2025-11-26T14:00:00.000Z',
+      status: 'in_progress',
+      pricing: { totalPrice: 75 },
+      location: { address: '456 Oak Ave, Springfield' },
+    },
+  ],
+  completed: [
+     {
+      _id: '3',
+      service: { title: 'Plant Selection', category: 'Plant Selection' },
+      scheduledDate: '2025-10-15T14:30:00.000Z',
+      status: 'completed',
+      pricing: { totalPrice: 40 },
+      location: { address: '654 Cedar Ln, Springfield' },
+      rating: { average: 5 },
+    },
+    {
+      _id: '4',
+      service: { title: 'Plant Cleaning', category: 'Plant Cleaning', bgColor: '#CEFAFE'  },
+      scheduledDate: '2025-10-01T11:00:00.000Z',
+      status: 'completed',
+      pricing: { totalPrice: 80 },
+      location: { address: '987 Maple Dr, Springfield' },
+      rating: { average: 4 },
+    },
+    {
+      _id: '5',
+      service: { title: 'Pest Control', category: 'Pest Control', bgColor: '#FFE2E2'  },
+      scheduledDate: '2025-10-01T11:00:00.000Z',
+      status: 'completed',
+      pricing: { totalPrice: 80 },
+      location: { address: '987 Maple Dr, Springfield' },
+      rating: { average: 4 },
+    },
+  ],
+  history: [
+    {
+      _id: '6',
+      service: { title: 'Plant Selection', category: 'Plant Selection' },
+      scheduledDate: '2025-10-15T14:30:00.000Z',
+      status: 'completed',
+      pricing: { totalPrice: 40 },
+      location: { address: '654 Cedar Ln, Springfield' },
+      rating: { average: 5 },
+    },
+    {
+      _id: '7',
+      service: { title: 'Plant Cleaning', category: 'Plant Cleaning', bgColor: '#CEFAFE'  },
+      scheduledDate: '2025-10-01T11:00:00.000Z',
+      status: 'completed',
+      pricing: { totalPrice: 80 },
+      location: { address: '987 Maple Dr, Springfield' },
+      rating: { average: 4 },
+    },
+    {
+      _id: '8',
+      service: { title: 'Pest Control', category: 'Pest Control', bgColor: '#FFE2E2'  },
+      scheduledDate: '2025-10-01T11:00:00.000Z',
+      status: 'completed',
+      pricing: { totalPrice: 80 },
+      location: { address: '987 Maple Dr, Springfield' },
+      rating: { average: 4 },
+    },
+  ],
+};
 
 const iconMapping = {
   'Plant Selection': AppIcons.sezer,
   'Cleaning': AppIcons.star,
   'Pest Control': AppIcons.insect,
-  'Irrigation Repair': AppIcons.drops,
+  'Plant Cleaning': AppIcons.star,
   'Lawn Mowing': AppIcons.sezer,
   'Tree Trimming': AppIcons.star,
 };
@@ -140,10 +219,9 @@ const Tasks = () => {
   const fetchBookings = async () => {
     try {
       setLoading(true);
-      const response = await ApiService.getMyBookings(activeTab);
-      if (response.success) {
-        setBookings(response.data);
-      }
+      // Simulate API delay
+      await new Promise(resolve => setTimeout(resolve, 500));
+      setBookings(DUMMY_BOOKINGS[activeTab] || []);
     } catch (error) {
       console.error('Error fetching bookings:', error);
     } finally {
@@ -161,11 +239,14 @@ const Tasks = () => {
           text: 'Yes',
           onPress: async () => {
             try {
-              const response = await ApiService.cancelBooking(bookingId, 'User requested cancellation');
-              if (response.success) {
-                Alert.alert('Success', 'Booking cancelled successfully');
-                fetchBookings();
-              }
+              // Simulate API delay
+              await new Promise(resolve => setTimeout(resolve, 500));
+              
+              // Remove booking from list
+              const updatedBookings = bookings.filter(b => b._id !== bookingId);
+              setBookings(updatedBookings);
+              
+              Alert.alert('Success', 'Booking cancelled successfully');
             } catch (error) {
               Alert.alert('Error', error.message);
             }
@@ -180,7 +261,7 @@ const Tasks = () => {
       style={styles.taskCard}
       onPress={() => setSelectedTask(item)}
     >
-      <Image source={AppImages.first_banner_bg} style={styles.taskImage} />
+      <Image source={AppImages.ongoing_one} style={styles.taskImage} />
       <View style={styles.cardTitleContainer}>
         <AppText
           title={item.service?.title || 'Service'}
@@ -261,7 +342,8 @@ const Tasks = () => {
               textColor={AppColors.GRAY}
             />
             <AppText
-              title={new Date(item.bookingDetails?.date).toLocaleDateString()}
+              // title={new Date(item.bookingDetails?.date).toLocaleDateString() || '04:45 PM, Otc 15 2020'}
+              title={'04:45 PM, Otc 15 2020'}
               textSize={1.2}
               textColor={AppColors.GRAY}
             />
@@ -281,101 +363,101 @@ const Tasks = () => {
     </View>
   );
 
-  if (selectedTask) {
-    return (
-      <View style={{ flex: 1, backgroundColor: AppColors.WHITE }}>
-        <View style={styles.detailHeader}>
-          <TouchableOpacity onPress={() => setSelectedTask(null)}>
-            <FontAwesome name="arrow-left" size={20} color={AppColors.BLACK} />
-          </TouchableOpacity>
-          <View style={{ flex: 1 }} />
-        </View>
+  // if (selectedTask) {
+  //   return (
+  //     <View style={{ flex: 1, backgroundColor: AppColors.WHITE }}>
+  //       <View style={styles.detailHeader}>
+  //         <TouchableOpacity onPress={() => setSelectedTask(null)}>
+  //           <FontAwesome name="arrow-left" size={20} color={AppColors.BLACK} />
+  //         </TouchableOpacity>
+  //         <View style={{ flex: 1 }} />
+  //       </View>
 
-        <LineBreak space={1.5} />
+  //       <LineBreak space={1.5} />
 
-        <View style={styles.detailContainer}>
-          <View style={styles.detailTitleRow}>
-            <View
-              style={[
-                styles.detailIconContainer,
-                { backgroundColor: AppColors.lightGreen },
-              ]}
-            >
-              <FontAwesome
-                name="leaf"
-                size={responsiveFontSize(2.5)}
-                color={AppColors.ThemeColor}
-              />
-            </View>
-            <AppText
-              title={selectedTask.title}
-              textSize={1.8}
-              textColor={AppColors.BLACK}
-              textFontWeight
-            />
-          </View>
+  //       <View style={styles.detailContainer}>
+  //         <View style={styles.detailTitleRow}>
+  //           <View
+  //             style={[
+  //               styles.detailIconContainer,
+  //               { backgroundColor: AppColors.lightGreen },
+  //             ]}
+  //           >
+  //             <FontAwesome
+  //               name="leaf"
+  //               size={responsiveFontSize(2.5)}
+  //               color={AppColors.ThemeColor}
+  //             />
+  //           </View>
+  //           <AppText
+  //             title={selectedTask.title}
+  //             textSize={1.8}
+  //             textColor={AppColors.BLACK}
+  //             textFontWeight
+  //           />
+  //         </View>
 
-          <LineBreak space={2} />
+  //         <LineBreak space={2} />
 
-          {detailsData.map((item, index) => (
-            <View key={index} style={styles.detailRow}>
-              <AppText
-                title={item.label}
-                textSize={1.4}
-                textColor={AppColors.GRAY}
-              />
-              <View style={styles.detailValueContainer}>
-                <AppText
-                  title={item.value}
-                  textSize={1.6}
-                  textColor={item.color}
-                  textFontWeight
-                />
-              </View>
-            </View>
-          ))}
+  //         {detailsData.map((item, index) => (
+  //           <View key={index} style={styles.detailRow}>
+  //             <AppText
+  //               title={item.label}
+  //               textSize={1.4}
+  //               textColor={AppColors.GRAY}
+  //             />
+  //             <View style={styles.detailValueContainer}>
+  //               <AppText
+  //                 title={item.value}
+  //                 textSize={1.6}
+  //                 textColor={item.color}
+  //                 textFontWeight
+  //               />
+  //             </View>
+  //           </View>
+  //         ))}
 
-          <View style={styles.divider} />
+  //         <View style={styles.divider} />
 
-          <LineBreak space={1} />
+  //         <LineBreak space={1} />
 
-          <View style={styles.priceRow}>
-            <AppText
-              title={'Total Price'}
-              textSize={1.7}
-              textColor={AppColors.BLACK}
-              textFontWeight
-            />
-            <AppText
-              title={'$49'}
-              textSize={1.8}
-              textColor={AppColors.ThemeColor}
-              textFontWeight
-            />
-          </View>
+  //         <View style={styles.priceRow}>
+  //           <AppText
+  //             title={'Total Price'}
+  //             textSize={1.7}
+  //             textColor={AppColors.BLACK}
+  //             textFontWeight
+  //           />
+  //           <AppText
+  //             title={'$49'}
+  //             textSize={1.8}
+  //             textColor={AppColors.ThemeColor}
+  //             textFontWeight
+  //           />
+  //         </View>
 
-          <LineBreak space={1.5} />
+  //         <LineBreak space={1.5} />
 
-          <View style={styles.statusRow}>
-            <AppText
-              title={'Status'}
-              textSize={1.7}
-              textColor={AppColors.BLACK}
-              textFontWeight
-            />
-            <AppText
-              title={'Waiting Accept'}
-              textSize={1.7}
-              textColor={'#FF9500'}
-              textFontWeight
-            />
-          </View>
-        </View>
+  //         <View style={styles.statusRow}>
+  //           <AppText
+  //             title={'Status'}
+  //             textSize={1.7}
+  //             textColor={AppColors.BLACK}
+  //             textFontWeight
+  //           />
+  //           <AppText
+  //             title={'Waiting Accept'}
+  //             textSize={1.7}
+  //             textColor={'#FF9500'}
+  //             textFontWeight
+  //           />
+  //         </View>
+  //       </View>
 
-        <LineBreak space={3} />
-      </View>
-    );
-  }
+  //       <LineBreak space={3} />
+  //     </View>
+  //   );
+  // }
 
   return (
     <ScrollView

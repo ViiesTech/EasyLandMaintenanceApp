@@ -1,29 +1,26 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useState } from 'react';
-import { View, KeyboardAvoidingView, Alert, ActivityIndicator } from 'react-native';
+import { View, KeyboardAvoidingView, Alert } from 'react-native';
 import AppColors from '../../utils/AppColors';
 import AuthHeader from '../../components/AuthHeader';
 import LineBreak from '../../components/LineBreak';
 import AppTextInput from '../../components/AppTextInput';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import AppButton from '../../components/AppButton';
-import ApiService from '../../services/api';
 
 const NewPassword = () => {
   const [state, setState] = useState({
     password: '',
     confirmPassword: '',
   });
-  const [loading, setLoading] = useState(false);
   const nav = useNavigation();
   const route = useRoute();
-  const resetToken = route.params?.resetToken || '';
 
   const onChangeText = (key, value) => {
     setState(prev => ({ ...prev, [key]: value }));
   };
 
-  const handleResetPassword = async () => {
+  const handleResetPassword = () => {
     // Validate password
     if (!state.password.trim()) {
       Alert.alert('Error', 'Please enter a new password');
@@ -40,37 +37,17 @@ const NewPassword = () => {
       return;
     }
 
-    if (!resetToken) {
-      Alert.alert('Error', 'Invalid reset token. Please try again.');
-      return;
-    }
-
-    setLoading(true);
-    try {
-      const response = await ApiService.resetPassword(resetToken, state.password);
-      
-      if (response.success) {
-        Alert.alert(
-          'Success',
-          'Your password has been reset successfully',
-          [
-            {
-              text: 'OK',
-              onPress: () => nav.navigate('Login'),
-            },
-          ]
-        );
-      } else {
-        Alert.alert('Error', response.message || 'Failed to reset password');
-      }
-    } catch (error) {
-      Alert.alert(
-        'Error',
-        error.message || 'Unable to reset password. Please try again.'
-      );
-    } finally {
-      setLoading(false);
-    }
+    // Show success and navigate to login
+    Alert.alert(
+      'Success',
+      'Your password has been reset successfully',
+      [
+        {
+          text: 'OK',
+          onPress: () => nav.navigate('Login'),
+        },
+      ]
+    );
   };
   return (
     <KeyboardAvoidingView

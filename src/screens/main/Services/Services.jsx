@@ -16,7 +16,90 @@ import Feather from 'react-native-vector-icons/Feather';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import SVGXml from '../../../components/SVGXML';
 import { AppIcons } from '../../../assets/icons';
-import ApiService from '../../../services/api';
+
+// Dummy services data
+const DUMMY_SERVICES = [
+  {
+    _id: '1',
+    title: 'Lawn Mowing',
+    category: 'Lawn Mowing',
+    description: 'Professional lawn mowing service for residential and commercial properties',
+    price: { startingCost: 50 },
+    rating: { average: 4.5, count: 120 },
+    availability: 'available',
+    bgColor: '#DCFCE7',
+  },
+  {
+    _id: '2',
+    title: 'Tree Trimming',
+    category: 'Tree Trimming',
+    description: 'Expert tree trimming and pruning to maintain healthy trees',
+    price: { startingCost: 75 },
+    rating: { average: 4.8, count: 85 },
+    availability: 'available',
+    bgColor: '#DBEAFE',
+  },
+  {
+    _id: '3',
+    title: 'Pest Control',
+    category: 'Pest Control',
+    description: 'Complete pest control solutions for your property',
+    price: { startingCost: 60 },
+    rating: { average: 4.6, count: 95 },
+    availability: 'available',
+    bgColor: '#FFE2E2',
+  },
+  {
+    _id: '4',
+    title: 'Plant Selection',
+    category: 'Plant Selection',
+    description: 'Expert plant selection and consultation services',
+    price: { startingCost: 40 },
+    rating: { average: 4.7, count: 110 },
+    availability: 'available',
+    bgColor: '#DCFCE7',
+  },
+  {
+    _id: '5',
+    title: 'Irrigation Repair',
+    category: 'Irrigation Repair',
+    description: 'Professional irrigation system repair and maintenance',
+    price: { startingCost: 80 },
+    rating: { average: 4.9, count: 75 },
+    availability: 'available',
+    bgColor: '#CEFAFE',
+  },
+  {
+    _id: '6',
+    title: 'Garden Cleaning',
+    category: 'Cleaning',
+    description: 'Complete garden cleaning and maintenance service',
+    price: { startingCost: 55 },
+    rating: { average: 4.4, count: 100 },
+    availability: 'available',
+    bgColor: '#DBEAFE',
+  },
+  {
+    _id: '7',
+    title: 'Landscape Design',
+    category: 'Landscaping',
+    description: 'Professional landscape design and planning',
+    price: { startingCost: 100 },
+    rating: { average: 4.9, count: 60 },
+    availability: 'available',
+    bgColor: '#E0F2F1',
+  },
+  {
+    _id: '8',
+    title: 'Fertilization',
+    category: 'Lawn Care',
+    description: 'Complete lawn fertilization service',
+    price: { startingCost: 45 },
+    rating: { average: 4.3, count: 90 },
+    availability: 'available',
+    bgColor: '#DCFCE7',
+  },
+];
 
 // Icon mapping for service categories
 const iconMapping = {
@@ -40,10 +123,9 @@ const Services = () => {
   const fetchServices = async () => {
     try {
       setLoading(true);
-      const response = await ApiService.getServices();
-      if (response.success) {
-        setServices(response.data);
-      }
+      // Simulate API delay
+      await new Promise(resolve => setTimeout(resolve, 500));
+      setServices(DUMMY_SERVICES);
     } catch (error) {
       console.error('Error fetching services:', error);
     } finally {
@@ -55,10 +137,16 @@ const Services = () => {
     if (searchQuery.trim()) {
       try {
         setLoading(true);
-        const response = await ApiService.getServices({ search: searchQuery });
-        if (response.success) {
-          setServices(response.data);
-        }
+        // Simulate API delay
+        await new Promise(resolve => setTimeout(resolve, 300));
+        
+        // Filter services based on search query
+        const filtered = DUMMY_SERVICES.filter(service =>
+          service.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          service.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          service.description.toLowerCase().includes(searchQuery.toLowerCase())
+        );
+        setServices(filtered);
       } catch (error) {
         console.error('Error searching services:', error);
       } finally {
@@ -72,7 +160,7 @@ const Services = () => {
     <View style={styles.cardContainer}>
       <View style={styles.cardContent}>
         <View style={[styles.iconContainer, { backgroundColor: item.bgColor || '#E8F5E9' }]}>
-            <SVGXml icon={iconMapping[item.title] || AppIcons.sezer} width={25} height={25} />
+            <SVGXml icon={iconMapping[item.title] || AppIcons.sezer} width={30} height={30} />
         </View>
 
         <View style={styles.textContainer}>
@@ -99,18 +187,18 @@ const Services = () => {
           <View style={styles.buttonContainer}>
             <View style={styles.buttonRow}>
               <AppButton
-                title={item.availability === 'high_demand' ? 'In High Demand' : 'Available'}
+                title={'In High Demand'}
                 buttoWidth={30}
                 padding={5}
                 textSize={1.5}
                 textFontWeight={false}
-                bgColor={item.availability === 'high_demand' ? AppColors.highDemand : AppColors.ThemeColor}
+                bgColor={ AppColors.highDemand}
               />
             </View>
             <LineBreak space={0.5} />
             <View style={styles.buttonRow}>
               <AppButton
-                title={item.rating?.average ? `★ ${item.rating.average.toFixed(1)}` : 'New Service'}
+                title={'Discount Available'}
                 buttonBg={AppColors.purple_light}
                 buttoWidth={30}
                 padding={5}

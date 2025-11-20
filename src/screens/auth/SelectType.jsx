@@ -56,7 +56,7 @@ const SelectType = () => {
         <AppButton
           title={'Continue'}
           bgColor={AppColors.BLACK}
-          handlePress={() => nav.navigate('EnableLocation')}
+          handlePress={() => nav.navigate('SignUp')}
         />
       </View>
     </View>
